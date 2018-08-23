@@ -1,17 +1,4 @@
 
-
-/*menue class*/
-table.menue{
-    border: 1px solid black;
-    width: 100%;
-}
-
-td.menue{
-    border:1px solid black;
-}
-
-
-
 /*content class*/
 
 header {
@@ -22,11 +9,49 @@ header {
     color: white;
 }
 
+section{
+    padding-left: 30px;
+    padding-top: 30px;
+}
 
 
-aside
-{
-    border: 1px solid black;
+.sidebar{
+    float:left;
+    width:25%;
+    height:99%;
+    background: #fffbf2;
+}
+
+.titlePane{
+    padding: 10px;
+    text-align: center;
+    background-color: #bebec0;
+    font-size:25px;
+    color:#fcfcfc;
+}
+
+.content{
+    float:left;
+    width:75%;
+    background-color:#fffdf9;
+}
+
+.main_page{
+    background-color: #c1c1c1;
+}
+
+
+.footer{
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+}
+
+.main::after{
+    content: "";
+    display: table;
+    clear: both;
 }
 nav
 {
@@ -36,7 +61,7 @@ nav
 }
 
 
-ul
+ul.navi
 {
     list-style-type: none;
     margin: 0;
@@ -45,7 +70,7 @@ ul
     background-color: #333;
 }
 
-li{
+li.navi{
     float: left;
 }
 
@@ -55,9 +80,4 @@ li a{
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-}
-
-/*default and debug class*/
-td,th,tr{
-    border:1px solid black;
 }
