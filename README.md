@@ -1,16 +1,13 @@
-# ProcessingTest
 
+This is a repo for my future web page
 
-This is a small test repo
-to show how to be able to integrate a processing sketch into github pages.
+for now it is a work in progress
+but already shows two kind of "posts"
 
+also it started as a test for integrating processing to files
 
-
-### index.html file
-
-There are all the script links to the hosted processing libraries. 
-If you want to you could also somehow include your own ones
-
-
-### sketches folder
-Here are the scretches lokated that are loaded elsewhere
+Later there will be a kind of template engine
+like from jekyll all based of some python 
+scripts that parse a simple markdown
+syntax and put together all the pages
+as they are needed.
