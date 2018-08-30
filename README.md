@@ -25,9 +25,8 @@ you can find it  [here](scripts/md_parser)
 The parser will most likely be seperated into three parts which all
 hava an own folder.
 
-+ (tokenizer)[scripts/md_parser/tokenizer] (available and working)
-+ (parser)[scripts/md_parser/parser]       (not yet there)
-+ (generator)[scripts/md_parser/generator] (not yet there)
-
++ (tokenizer)[scripts/md_parser/tokenizer]
++ (parser)[scripts/md_parser/parser]
++ (generator)[scripts/md_parser/generator]
 
 
