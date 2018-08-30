@@ -1,4 +1,5 @@
 from tokenizer.token import *
+from tokenizer.TokenList import *
 from tokenizer.BaseScanner import *
 from tokenizer.TextScanner import *
 
@@ -7,7 +8,8 @@ from tokenizer.TextScanner import *
 
 class cTokenizer():
     def __init__(self):
-        self.tokens=[]
+        #self.tokens=[]
+        self.tokens = cTokenList()
         self.md_text=""
         self.to_process_txt=""
 
@@ -36,7 +38,7 @@ class cTokenizer():
         print("scanning everything...")
 
         if self.to_process_txt == "" or self.to_process_txt == None:
-            self.tokens.append(cToken.end_of_file())
+            self.tokens.add(cToken.end_of_file())
             return
 
         print(self.to_process_txt)
@@ -44,9 +46,9 @@ class cTokenizer():
             token =self.scann_single_token()
             print(token)
             self.to_process_txt=self.to_process_txt[token.getSize():]
-            self.tokens.append(token)
+            self.tokens.add(token)
             print(self.to_process_txt)
-        self.tokens.append(cToken.end_of_file())
+        self.tokens.add(cToken.end_of_file())
 
 
 

@@ -6,7 +6,7 @@ import string
 import datetime
 
 
-
+print(sys.version)
 #file to parse
 f_name = "test.md"
 
@@ -24,14 +24,23 @@ samples=[
 
 
 from tokenizer.tokenizer import *
+from parser.parser import *
 
 
 token_checker = cTokenizer()
-token_checker.setMdText("Hello _world_\nThis *is* me")
+token_checker.setMdText("Hello _world_\n\nThis *is* me")
 token_checker.start()
 
-for token in token_checker.tokens:
-    print(token.value+" "+token.type)
+
+token_checker.tokens.print_list()
+
+md_parser = cParser()
+md_parser.parse(token_checker.tokens)
+
+
+
+#for token in token_checker.tokens:
+#    print(token.value+" "+token.type)
 
 
 #info websites
