@@ -25,8 +25,7 @@ samples=[
 
 from tokenizer.tokenizer import *
 from parse_md.parser import *
-
-import parser
+from generate_md.generator import *
 
 
 
@@ -40,8 +39,9 @@ token_checker.tokens.print_list()
 
 md_parser = cParser()
 tree = md_parser.parse(token_checker.tokens)
-
-
+print(tree)
+md_generator =cGenerator()
+md_generator.generate(tree)
 
 #for token in token_checker.tokens:
 #    print(token.value+" "+token.type)
