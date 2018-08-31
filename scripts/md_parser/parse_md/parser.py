@@ -1,8 +1,11 @@
-from parser.BodyParser import *
+from parse_md.BodyParser import *
 
 class cParser():
     def parse(self,tokens):
         body =cBodyParser().match(tokens)
-        if body[1] != tokens.count():
-            raise "There is some error in the tokens"
+        if body.consumed != tokens.count():
+            print(str(body.consumed)+" "+str(tokens.count()))
+            print("The token count dosn't match something is wrong")
+        else:
+            print(str(body.consumed)+" "+str(tokens.count()))
         return body

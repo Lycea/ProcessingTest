@@ -1,10 +1,14 @@
-from parser.Node import *
+from parse_md.Node import *
 
 #return the first found result
 def match_first(tokens,parsers):
     for parser in parsers:
         node = parser.match(tokens)
-        if node[0] == True:
+        print(node)
+        if node == False or node == None:
+            print("skip this")
+            continue 
+        else:
             return node
     return cNode.null()
 
@@ -14,12 +18,22 @@ def match_star(tokens,parser):
     consumed      = 0
 
     while True:
-        node = parser.match(tokens[consumed:])
-        if node != False:
-            matched_nodes.append(node)
-            consumed +=node.consumed
+        print(tokens)
+        print("\n")
+        if type(tokens) != list: 
+            node = parser.match(tokens.t_list[consumed:])
+            if node != False:
+                matched_nodes.append(node)
+                consumed +=node.consumed
+            else:
+                break
         else:
-            break
+            node = parser.match(tokens[consumed:])
+            if node != False:
+                matched_nodes.append(node)
+                consumed +=node.consumed
+            else:
+                break
     
     return [matched_nodes,consumed]
 

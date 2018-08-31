@@ -24,7 +24,11 @@ samples=[
 
 
 from tokenizer.tokenizer import *
-from parser.parser import *
+from parse_md.parser import *
+
+import parser
+
+
 
 
 token_checker = cTokenizer()
@@ -35,7 +39,7 @@ token_checker.start()
 token_checker.tokens.print_list()
 
 md_parser = cParser()
-md_parser.parse(token_checker.tokens)
+tree = md_parser.parse(token_checker.tokens)
 
 
 

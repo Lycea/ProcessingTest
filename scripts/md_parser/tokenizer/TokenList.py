@@ -1,21 +1,21 @@
 class cTokenList():
     def __init__(self):
-        self._list = []
+        self.t_list = []
 
     #add an item to the list
     def add(self,item):
-        self._list.append(item)
+        self.t_list.append(item)
 
     #checks the first index and tells if yes or no
     def peek(self,type_):
-        if self._list[0].type == type_:
+        if self.t_list[0].type == type_:
             return True
         else:
             return False
         
     def peek_idx(self,idx,type_):
         try:
-            if self._list[idx].type == type_:
+            if self.t_list[idx].type == type_:
                 return True
             else:
                 return False
@@ -57,15 +57,15 @@ class cTokenList():
         return [matches,count_consumed]
     
     def print_list(self):
-        for token in self._list:
+        for token in self.t_list:
             print(token.type+"  "+token.value)
     
     #get value from index  but starting from 1 so calc -1
     def getValueAt(self,idx):
-        return self._list[idx-1].value
+        return self.t_list[idx-1].value
 
     def count(self):
-        return len(self._list)
+        return len(self.t_list)
 
 
 #test cases to check if the class works as expected
