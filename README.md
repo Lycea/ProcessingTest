@@ -26,7 +26,13 @@ The parser will most likely be seperated into three parts which all
 hava an own folder.
 
 + [tokenizer](scripts/md_parser/tokenizer) (available)
-+ [parser](scripts/md_parser/parser) (not yet implemented)
-+ [generator](scripts/md_parser/generator) (not yet implemented)
++ [parser](scripts/md_parser/parser_md) (available)
++ [generator](scripts/md_parser/generate_md) (availavle)
+
+for now it supports:
+- emphasising
+- strong
+- paragraps
+- strikethroughs
 
 
