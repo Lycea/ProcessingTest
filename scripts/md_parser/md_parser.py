@@ -7,19 +7,17 @@ import datetime
 
 
 print(sys.version)
-#file to parse
-f_name = "test.md"
 
 
-
-parsable_text = "A text section __with__ some *deco*"
+#Testcases
+test_text ="Hello this is a md test\n\n This __bold__ and this is **bold**\n\nThis is _italic_ and this is *italic*"
 samples=[
-    "_test*",
     "__bold__",
-    "*emphazized*"
+     "**bold**",
+    "*emphazized*",
+    "_emphazized_",
+    "~striked~"
 ]
-#more compiler like way ? (sample)
-
 
 
 
@@ -28,31 +26,28 @@ from parse_md.parser import *
 from generate_md.generator import *
 
 
+def parse_md(raw_md_text):
+    token_checker = cTokenizer()
+    md_parser = cParser()
+    md_generator =cGenerator()
 
-
-token_checker = cTokenizer()
-token_checker.setMdText("Hello this is a md test\n\n This __bold__ and this is **bold**\n\nThis is _italic_ and this is *italic*")
-token_checker.start()
-
-
-token_checker.tokens.print_list()
-
-md_parser = cParser()
-tree = md_parser.parse(token_checker.tokens)
-print(tree)
-md_generator =cGenerator()
-
-
-
-html =md_generator.generate(tree)
-print(html)
-
-#f=open("test.html","w")
-#f.write(html)
-#f.close()
+    token_checker.setMdText(raw_md_text)
+    token_checker.start()
+    #token_checker.tokens.print_list()
+    
+    tree = md_parser.parse(token_checker.tokens)
+    
+    html =md_generator.generate(tree)
+    print(html)
 
 
 
+
+
+parse_md(test_text)
+
+for sample in samples:
+    parse_md(sample)
 
 #info websites
 #https://spec.commonmark.org/0.26/

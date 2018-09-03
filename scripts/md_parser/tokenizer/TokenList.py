@@ -6,13 +6,14 @@ class cTokenList():
     def add(self,item):
         self.t_list.append(item)
 
-    #checks the first index and tells if yes or no
+    #checks the first index and tells if it is the desired string
     def peek(self,type_):
         if self.t_list[0].type == type_:
             return True
         else:
             return False
-        
+
+    #return if item at idx idx is the desired type(-string)
     def peek_idx(self,idx,type_):
         try:
             if self.t_list[idx].type == type_:
@@ -20,10 +21,11 @@ class cTokenList():
             else:
                 return False
         except Exception as e:
-            print("No item left in queu")
+            #print("list is empty")
             return False
 
     #expects a list and a list in the list
+    #checks if one of the cases fits the strings in the list
     # [[TYPE1,TYPE2,TYPE3,TYPE4],[TYPE1,TYPE2,TYPE4]]
     #[UNDERSCORE,TEXT,UNDERSCORE],[STAR,TEXT,STAR]
     def peek_or(self,list):

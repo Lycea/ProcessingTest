@@ -5,7 +5,6 @@ from tokenizer.TokenList import *
 
 class EmphasiseParser(cBaseParser):
     def match(self,tokens):
-       print(tokens)
        if type(tokens)==list:
            temp = cTokenList()
            temp.t_list = tokens

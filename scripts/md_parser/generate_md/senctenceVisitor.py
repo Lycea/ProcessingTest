@@ -1,13 +1,15 @@
 from generate_md.BoldVisitor import *
 from generate_md.EmphasiseVisitor import *
 from generate_md.TextVisitor import *
+from generate_md.StrikeVisitor import *
 
 class cSentenceVisitor():
     def __init__(self):
         self.TYPES={
             "TEXT":cTextVisitor(),
             "BOLD":cBoldVisitor(),
-            "EMPHASISE":cEmphasiseVisitor()
+            "EMPHASISE":cEmphasiseVisitor(),
+            "STRIKE":cStrikeVisitor()
         }
     def visit(self,tree):
         concat_txt = ""

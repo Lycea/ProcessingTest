@@ -9,7 +9,8 @@ class cScanner():
         self.TOKENS={
           "_":'UNDERSCORE',
           "*":"STAR",
-          "\n":"NEWLINE"  
+          "\n":"NEWLINE" , 
+          "~":"TILDE"
         }
         #get first string and check
         char = raw_text[0]

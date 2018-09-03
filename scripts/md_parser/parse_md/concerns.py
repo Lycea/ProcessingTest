@@ -4,9 +4,7 @@ from parse_md.Node import *
 def match_first(tokens,parsers):
     for parser in parsers:
         node = parser.match(tokens)
-        print(node)
         if node == False or node == None:
-            print("skip this")
             continue 
         else:
             return node
@@ -18,8 +16,6 @@ def match_star(tokens,parser):
     consumed      = 0
 
     while True:
-        print(tokens)
-        print("\n")
         if type(tokens) != list: 
             node = parser.match(tokens.t_list[consumed:])
             if node != False:

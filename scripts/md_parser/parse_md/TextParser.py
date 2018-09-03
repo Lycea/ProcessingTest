@@ -8,7 +8,6 @@ class cTextParser(cBaseParser):
             return False
         
         if tokens[0].type == "TEXT":
-            print("is text create new node...")
             return cNode("TEXT",tokens[0].value,1)
         else:
             return False
