@@ -16,7 +16,8 @@ samples=[
      "**bold**",
     "*emphazized*",
     "_emphazized_",
-    "~striked~"
+    "~striked~",
+    "___both___"
 ]
 
 
