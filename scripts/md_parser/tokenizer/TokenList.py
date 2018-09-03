@@ -8,6 +8,8 @@ class cTokenList():
 
     #checks the first index and tells if it is the desired string
     def peek(self,type_):
+        if len(self.t_list) == 0:
+            return False
         if self.t_list[0].type == type_:
             return True
         else:

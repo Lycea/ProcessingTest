@@ -10,7 +10,7 @@ print(sys.version)
 
 
 #Testcases
-test_text ="Hello this is a md test\n\n This __bold__ and this is **bold**\n\nThis is _italic_ and this is *italic*"
+test_text ="Hello this is a md test\nThis is __bold__ and \nthis is **bold**\n\nThis is _italic_ and this is *italic*"
 samples=[
     "__bold__",
      "**bold**",

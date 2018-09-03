@@ -2,6 +2,7 @@ from generate_md.BoldVisitor import *
 from generate_md.EmphasiseVisitor import *
 from generate_md.TextVisitor import *
 from generate_md.StrikeVisitor import *
+from generate_md.BreakVisitor import *
 
 class cSentenceVisitor():
     def __init__(self):
@@ -9,7 +10,8 @@ class cSentenceVisitor():
             "TEXT":cTextVisitor(),
             "BOLD":cBoldVisitor(),
             "EMPHASISE":cEmphasiseVisitor(),
-            "STRIKE":cStrikeVisitor()
+            "STRIKE":cStrikeVisitor(),
+            "BREAK":cBreakVisitor()
         }
     def visit(self,tree):
         concat_txt = ""
