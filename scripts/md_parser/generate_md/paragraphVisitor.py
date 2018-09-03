@@ -9,3 +9,5 @@ class cParagraphVisitor():
             generated_txt += cSentenceVisitor().visit(nodes)
             print(nodes)
         generated_txt+="</p>"
+
+        return generated_txt

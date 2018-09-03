@@ -11,6 +11,6 @@ class EmphasiseParser(cBaseParser):
            temp.t_list = tokens
            tokens = temp
        if tokens.peek_or([["UNDERSCORE","TEXT","UNDERSCORE"],["STAR","TEXT","STAR"]])[0] == True:
-           return cNode("BOLD",tokens.getValueAt(2), 3)
+           return cNode("EMPHASISE",tokens.getValueAt(2), 3)
        else:
             return cNode.null()
