@@ -5,6 +5,8 @@ from parse_md.TextParser import *
 from parse_md.StrikeParser import *
 from parse_md.BreakParser import *
 from parse_md.DefaultParser import *
+from parse_md.BoldAndItalicParser import *
+
 
 from parse_md.concerns import match_first
 
@@ -12,4 +14,4 @@ from parse_md.concerns import match_first
 #parses one "Sentence" 
 class cSentenceParser(cBaseParser):
     def match(self,tokens):
-        return match_first(tokens,[cBreakParser(),cStrikeParser(), EmphasiseParser(),BoldParser(),cTextParser(),cDefaultParser()])
+        return match_first(tokens,[cBreakParser(),cStrikeParser(), cBoldAndItalicParser(),EmphasiseParser(),BoldParser(),cTextParser(),cDefaultParser()])
