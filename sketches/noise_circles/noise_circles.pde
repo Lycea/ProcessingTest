@@ -48,8 +48,6 @@ function setup()
 function draw_circle(val,idx,ar)
 {
 	ellipse(val[0],val[1],val[2],val[2]);
-	ar[idx][0]+= random(-3,3)
-	ar[idx][1]+= random(-3,3)
 }
 function draw_noise()
 {
@@ -77,7 +75,7 @@ function draw()
 		stroke(255);
 		fill(0, 100, 100,0.2);
 		circles.forEach(draw_circle);
-		//draw_count +=1;
+		draw_count +=1;
 	}
 
 	
