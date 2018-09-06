@@ -9,6 +9,7 @@ class cTextScanner(cScanner):
          text=raw_text
          txt_token=""
          #iterate the string
+
          for char in text:
              #if it is not a token
              if cScanner.from_string(cScanner,char) == False:

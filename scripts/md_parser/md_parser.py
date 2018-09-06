@@ -40,15 +40,25 @@ def parse_md(raw_md_text):
     
     html =md_generator.generate(tree)
     print(html)
+    return(html)
 
 
 
 
 
-parse_md(test_text)
+f=open("test_file.md","r")
+g=open("test_file.html","w")
+g.write(parse_md(f.read()))
 
-for sample in samples:
-    parse_md(sample)
+f.close()
+g.close()
+#parse_md(test_text)
+
+#for sample in samples:
+#    parse_md(sample)
+
+
+
 
 #info websites
 #https://spec.commonmark.org/0.26/
