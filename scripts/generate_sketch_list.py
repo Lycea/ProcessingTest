@@ -16,6 +16,8 @@ sketch_path = base_path+"/sketches"
 
 #create the sketch overview page
 sketch_list =open(sketch_path+"/sketch_list.html","w")
+
+sketch_list.write("<body>")
 sketch_list.write("<ul>\n")
 
 
@@ -35,11 +37,12 @@ for root,dirs,files in os.walk(sketch_path):
             sketch_list.write("\t<h3>")
             sketch_list.write('<a href="'+dir+'/'+dir+'.html'+'">'+dir+':</a>')
             sketch_list.write("</h3>\n")
-            sketch_list.write()
-            #<object data="sketches/snow_flakes/snow_flakes.html" type="text/html" width = "500px" height="450px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>
+            sketch_list.write('<object data="'+dir+'/'+dir+'.html'+'" type="text/html" width = "500px" height="450px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>')
+            
 
 
 sketch_list.write("</ul>")
+sketch_list.write("</body>")
 sketch_list.close()
 
 
