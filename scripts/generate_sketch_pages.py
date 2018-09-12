@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "moving_forms"
+sketch_name = "langtons_ant"
 
 
 
@@ -10,7 +10,7 @@ sketch_name = "moving_forms"
 
 path = ""
 #generate folder
-if not os.path.exists("../sketches/"+sketch_namecd):
+if not os.path.exists("../sketches/"+sketch_name):
     os.mkdir("../sketches/"+sketch_name)
     path ="../sketches/"+sketch_name
 else:
