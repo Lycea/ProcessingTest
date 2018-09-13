@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "langtons_ant"
+sketch_name = "game_of_life_1"
 
 
 
