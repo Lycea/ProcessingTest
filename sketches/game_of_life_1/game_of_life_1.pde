@@ -12,13 +12,13 @@ var alive_chance =30
 
 //rule set
  //smaller than that is lonely
-var lonely = 2
+var lonely = 3
 
 //between them it is allive
 var alive_min = 2
 var alive_max = 3
 
-//greater then this dies
+//greater and equal then this dies
 var over_popu = 3
 
 //to become alive
@@ -26,7 +26,7 @@ var revive =3
 
 
 
-var cell_size =5
+var cell_size =4
 
 function modu(val,mod)
 {
@@ -41,25 +41,39 @@ class pixel
 	constructor(x,y,state)
 	{
 		print("creating pixel...")
-		this.neighbours =[]
+		this.cur_neighbours =[]
 		this.aliveNeigh= 0
 
 		this.state     = state
 		this.prevState = state
 		this.newState  = state
 
-		this.x =x
-		this.y =y
+		this.pos_x =x
+		this.pos_y =y
 
 		this.show_states =[this.dummy_show,this.real_show]
-		
+		//print(this.pos_x,this.pos_y)
+		//print(this.neighbours)
+	}
+
+	count_neigh()
+	{
+		var num=0;
+		for(var i=0;i<8;i++)
+		{
+			//print(this)
+			num+=this.cur_neighbours[i].state
+		}
+		return num
 	}
 
 	check_state()
 	{
+		var alive = this.count_neigh()
+		
 		if (this.state == DEAD)
 		{
-			if(this.aliveNeigh == revive)
+			if(alive == revive)
 			{
 				return ALIVE
 			}
@@ -68,25 +82,66 @@ class pixel
 		}
 		else
 		{
-			if(this.aliveNeigh < lonely)
+			if(alive < lonely)
 			{
 				return DEAD
 			}
-			else if(this.aliveNeigh>= alive_min && this.aliveNeigh<= alive_max)
+			else if(alive>= alive_min && alive<= alive_max)
 			{
 				return ALIVE
 			}
-			else if(this.aliveNeigh>=over_popu)
+			else if(alive>=over_popu)
 			{
 				return DEAD
 			}
+
+			return ALIVE
 		}
 	}
 
 	
 	init_neighbours()
 	{
+		print("Initialising neighbours...")
+		var n_count=0
 
+		for(var i =-1;i<=1;i++)
+		{
+			for(var j=-1;j<=1;j++)
+			{
+				if(i == 0 && j == 0)
+				{
+					continue
+				}
+				var x = modu(this.x+j,pix_width-1)
+				var y = modu(this.y+i,pix_height-1)
+				
+				//print(this.x,this.y)
+				//print(x,y)
+				
+				//print(grid[y][x])
+				//print(this.neighbours)
+				this.neighbours[n_count]=grid[y][x]
+
+				if(this.activeState == ALIVE)
+				{
+					this.neighbours[n_count].increase_alive()
+				}
+				
+				n_count++
+			}
+		}
+	}
+
+
+	increase_alive()
+	{
+		this.aliveNeigh++
+	}
+
+	decreae_alive()
+	{
+		this.aliveNeigh++
 	}
 
 	get activeState()
@@ -94,23 +149,48 @@ class pixel
 		return this.state
 	}
 
-	set neighbours(data)
-	{
-		this.neighbours = data
-	}
+
+	
+	
 	get neighbours()
 	{
-		return this.aliveNeigh
+		return this.cur_neighbours
+	}
+
+	set x(data)
+	{
+		this.pos_x=data
+	}
+	
+	set y(data)
+	{
+		this.pos_y=data
+	}
+
+	get x()
+	{
+		
+		return this.pos_x
+	}
+
+	get y()
+	{
+		
+		return this.pos_y
 	}
 
 	update()
 	{
-		this.newState = this.check_state()	
+		
+		this.newState = this.check_state()
 	}
 
-	real_show()
+	real_show(x,y)
 	{
-		rect(this.x,this.y,cell_size,cell_size)
+		//print("drawing")
+		rect(x*cell_size,y*cell_size,cell_size,cell_size)
+		//print(x,y)
+		
 	}
 	dummy_show()
 	{
@@ -124,6 +204,7 @@ class pixel
 		this.prevState = this.state
 		this.state = this.newState
 		
+		
 		if(this.state != this.prevState)
 		{
 			for(var j=0;j<this.neighbours.length;j++)
@@ -132,7 +213,7 @@ class pixel
 			}
 		}
 
-		this.show_states[this.state]
+		this.show_states[this.prevState](this.x,this.y)
 	}
 }
 
@@ -147,7 +228,7 @@ function ini_grid()
 	for(var i=0;i<pix_height;i++)
 	{
 		grid[i]=[]
-		for(var j=;j<pix_width;j++)
+		for(var j=0;j<pix_width;j++)
 		{
 			var set_state=DEAD
 			if(random(0,100)<=alive_chance)
@@ -160,9 +241,10 @@ function ini_grid()
 
 	for(var i=0;i<pix_height;i++)
 	{
-		for(var j=;j<pix_width;j++)
+		for(var j=0;j<pix_width;j++)
 		{
-			
+			//check cell state and set neighbours
+			grid[i][j].init_neighbours()
 		}
 	}
 }
@@ -171,14 +253,28 @@ function setup()
 {
 	createCanvas(400,400);
 	colorMode(HSL,360,100,100);
+	
+	noSmooth()
+	noStroke()
 
 	ini_grid()
-
 }
 
 
 function draw()
 {
-
+	fill(0,100,100)
+	rect(0,0,width,height)
+	fill(0,100,50)
+	print("start cycle...")
+	for(var i=0;i<pix_height;i++)
+	{
+		for(var j=0;j<pix_width;j++)
+		{
+			//check cell state and set neighbours
+			grid[i][j].update()
+			grid[i][j].show()
+		}
+	}
 
 }
