@@ -19,10 +19,11 @@ class cTokenizer():
     #scan for a single token and return it
     def scann_single_token(self):
         scanners=[
-            cScanner(),
-            cTextScanner()
+            cScanner(), #finds special signs and converts them to tokens
+            cTextScanner() #parses everything into a token till there is a special one
         ]
 
+        #iterate over the given scanners for finding tokens
         for scanner in scanners:
             result =scanner.from_string(self.to_process_txt) 
             if result == cToken.null():

@@ -3,13 +3,22 @@ from parse_md.Node import  *
 from tokenizer.TokenList import  *
 
 
-class cBoldAndItalicParser(cBaseParser):
+class cHeaderParser(cBaseParser):
     def match(self,tokens):
        if type(tokens)==list:
           tmp = cTokenList()
           tmp.t_list = tokens
           tokens = tmp
-          if tokens.peek("HASH"):
-            return cNode("HEADER","#")
+
+          idx =0
+          hash_count=0
+          while True:
+            if tokens.peek_idx(idx,"HASH"):
+                hash_count+=1
+                idx+=1
+            else:
+                break
+
+        return cNode("HEADER")
 
           return cNode.null()

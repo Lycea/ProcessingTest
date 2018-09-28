@@ -10,7 +10,8 @@ class cScanner():
           "_":'UNDERSCORE',
           "*":"STAR",
           "\n":"NEWLINE" , 
-          "~":"TILDE"
+          "~":"TILDE",
+          "#":"HASH"
         }
         #get first string and check
         char = raw_text[0]

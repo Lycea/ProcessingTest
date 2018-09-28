@@ -15,7 +15,7 @@ var alive_chance =30
 var lonely = 3
 
 //between them it is allive
-var alive_min = 2
+var alive_min = 3
 var alive_max = 3
 
 //greater and equal then this dies
@@ -90,7 +90,7 @@ class pixel
 			{
 				return ALIVE
 			}
-			else if(alive>=over_popu)
+			else if(alive>over_popu)
 			{
 				return DEAD
 			}
@@ -123,10 +123,11 @@ class pixel
 				//print(this.neighbours)
 				this.neighbours[n_count]=grid[y][x]
 
-				if(this.activeState == ALIVE)
+				/*if(this.activeState == ALIVE)
 				{
 					this.neighbours[n_count].increase_alive()
 				}
+				*/
 				
 				n_count++
 			}
