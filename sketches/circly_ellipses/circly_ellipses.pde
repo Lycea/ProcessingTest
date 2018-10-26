@@ -24,6 +24,7 @@ var e_height=20
 var ellipses=10
 var angle_per= 360-210/ ellipses
 
+
 function draw()
 {
    background(0);

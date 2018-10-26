@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "game_of_life_1"
+sketch_name = "MovingBubbles"
 
 
 
