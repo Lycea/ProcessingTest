@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "MovingBubbles"
+sketch_name = "RandomWalk2"
 
 
 
