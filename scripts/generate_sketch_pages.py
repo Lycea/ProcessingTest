@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "RandomWalkRGB"
+sketch_name = "WindField"
 
 
 
