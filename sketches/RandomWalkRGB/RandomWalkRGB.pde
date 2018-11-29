@@ -13,7 +13,7 @@ var greenStatuc = 0
 function new_point()
 {
 	var tmp =[]
-	tmp.x = floor( width/2)
+	tmp.x = floor(width/2)
 	tmp.y = floor(height/2)
 	tmp.h = random(0,255)
 	tmp.s = random(0,255)
