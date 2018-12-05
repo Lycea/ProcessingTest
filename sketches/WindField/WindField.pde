@@ -2,7 +2,7 @@ var field =[]
 
 var objects =[]
 
-var pixel_per_obj = 40
+var pixel_per_obj = 20
 
 function modu(val,mod)
 {
@@ -19,7 +19,7 @@ class pixel
 		this.pos = createVector(random(0,width),random(0,height))	
 		this.vel = createVector(0,0)	
 		this.acc = createVector(0,0)
-		this.ttl = 40
+		this.ttl = 99999999
 		this.col = random(0,60)
 		this.light = random(25,100)
 	}
@@ -45,7 +45,7 @@ class pixel
 		
 		this.ttl-=1
 		this.light+=30
-		//this.col =+30
+		//this.col = (this.col+1)%360
 		if (this.ttl <=0 )
 		{
 			this.create()
@@ -54,12 +54,12 @@ class pixel
 
 	show()
 	{
-		stroke(this.col,this.light,50 ,0)
+		stroke(this.col,this.light,50 ,1)
 		//fill(0,0.1)
-		fill(this.col,this.light,50 ,0.3)
-		rect(this.pos.x,this.pos.y,1,1)
+		fill(this.col,this.light,50 ,1)
+		rect(this.pos.x,this.pos.y,3,3)
 
-		line(this.pos.x,this.pos.y,this.prev.x,this.prev.y)
+		//line(this.pos.x,this.pos.y,this.prev.x,this.prev.y)
 	}
 
 	applyForce()
@@ -72,13 +72,43 @@ class pixel
 	}
 }
 
-zoom = 3
+zoom = 10
+angle = 400
+mag_factor = 5
+
+var settings =0
+
+
+function cb_all(something)
+{
+	//set the value to the actualised value :P
+	window[something]=settings.getValue(something)
+}
+
 function setup() 
 {
+	
 	createCanvas(800,400);
 	colorMode(HSL,360,100,100);
 
-	
+	noiseSeed(1)
+
+	settings = QuickSettings.create(0,0,"FieldParams")
+	settings.addRange("zoom",0,100,zoom,0.5)
+	settings.addRange("angle",0,1000,angle,0.5)
+	settings.addRange("mag_factor",0,100,mag_factor,0.5)
+	print(settings)
+
+
+	settings.setGlobalChangeHandler(cb_all)
+	/*gui = createGui("p5.gui")
+	gui.addGlobals("zoom")
+	gui.addGlobals("angle")
+	gui.addGlobals("mag_factor")
+	*/
+
+
+
 	for(var i=0;i<floor(height/pixel_per_obj);i++)
 	{
 		field[i]=[]
@@ -91,14 +121,14 @@ function setup()
 			var len = 0
 			var vel = 0
 
-			var place = p5.Vector.fromAngle(radians( noise(j/zoom,i/zoom,20/zoom)*400))
-			place.setMag(noise(j/(zoom*5)+40000,i/(zoom*5)+40000,20)*2)
+			var place = p5.Vector.fromAngle(radians( noise(j/zoom,i/zoom,20/zoom)*angle))
+			place.setMag(noise(j/(zoom*mag_factor)+40000,i/(zoom*mag_factor)+40000,20)/2)
 			field[i][j]=place
 			
 		}
 	}
 
-	for(var i=0;i<800;i++)
+	for(var i=0;i<100;i++)
 	{
 		//objects.push(createVector( random(0, width),random(0,height)))
 		objects.push(new pixel())
@@ -112,26 +142,31 @@ var num = 0
 var zoff =0
 function draw()
 {
-	//background(255)
+	background(255)
 	num = num+0.01
-	zoff+=0
+	//zoff+=0.05
 	for(var i=0;i<field.length;i++)
 	{
 		for(var j=0;j<field[i].length;j++)
 		{
 			mag =field[i][j].mag()
-			field[i][j] =p5.Vector.fromAngle(radians( noise(j/zoom,i/zoom,zoff)*400))
-			field[i][j].setMag(mag)
+			//field[i][j] =p5.Vector.fromAngle(radians( noise(j/zoom,i/zoom,zoff/zoom)*400))
+			//field[i][j].setMag(mag)
 			var vec = field[i][j]
 
 			//vec.x = noise(i,j)
 			//vec.y = noise(i+sin(num)*10 + 20000)*3
 
-			var tmp = createVector(j*pixel_per_obj,i*pixel_per_obj).add(vec.copy().mult(20))
-			//tmp.setMag(0.1)
 			
-			//stroke(0)
-			//line(j*pixel_per_obj,i*pixel_per_obj,tmp.x,tmp.y)
+			//tmp.setMag(0.1)
+
+			vec = p5.Vector.fromAngle(radians( noise(j/zoom,i/zoom,zoff/zoom)*angle))
+			vec.setMag(noise(j/(zoom*mag_factor)+40000,i/(zoom*mag_factor)+40000,zoff/(zoom*mag_factor))/2)
+
+			var tmp = createVector(j*pixel_per_obj,i*pixel_per_obj).add(vec.copy().mult(30))
+			
+			stroke(0)
+		    line(j*pixel_per_obj,i*pixel_per_obj,tmp.x,tmp.y)
 		}
 	}
 
@@ -142,7 +177,7 @@ function draw()
 		obj.applyForce()
 		obj.update()
 		
-		obj.show()
+		//obj.show()
 
 
 		//calc the gridpot it is in
@@ -162,7 +197,7 @@ function draw()
 
 	}
 
-	print(floor(frameRate()))
+	//print(floor(frameRate()))
 
 
 }
