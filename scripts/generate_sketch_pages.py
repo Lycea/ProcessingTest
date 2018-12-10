@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "WindField"
+sketch_name = "FractalTest"
 
 
 
