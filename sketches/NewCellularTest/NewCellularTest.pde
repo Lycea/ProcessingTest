@@ -39,7 +39,7 @@ function ini_grid()
 			grid[height_idx][width_idx]=new cell(width_idx,height_idx);
 			//print(grid[height_idx][width_idx])
 
-			grid[height_idx][width_idx].state = floor(random(0,1)+0.2)
+			grid[height_idx][width_idx].state = floor(random(0,2)+0.2)
 		}
 	}
 }
@@ -181,8 +181,16 @@ function update_grid()
 
 	for(idx_alive=0;idx_alive <=alive_cells.length-1;idx_alive++)
 	{
-		fill(150,50,50)
 		let pos = alive_cells[idx_alive]
+
+		if (grid[pos[0]][pos[1]].state == 2)
+		{
+		fill(150,50,50)
+		}
+		else
+		{
+			fill(0,50,50)
+		}
 		rect(pos[0]*cell_width+cell_off_x*pos[0],pos[1]*(cell_height+cell_off_y),cell_width,cell_height);
 		fill(0)
 	}

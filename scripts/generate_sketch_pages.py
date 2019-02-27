@@ -1,7 +1,7 @@
 import os
 import datetime
 
-sketch_name = "NewCellularTest"
+sketch_name = "3DTest"
 
 
 
