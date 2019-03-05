@@ -20,6 +20,7 @@ class mover
 	this.steps = 0
 	this.speed = 3
 	this.col = random(0,360)
+	this.make_blob = false
   }
 
   move()
@@ -28,28 +29,35 @@ class mover
 	{
 		this.x = modu(this.x+this.speed*dirs[this.dir][0],width);
 		this.y = modu(this.y+this.speed*dirs[this.dir][1],height);
-		this.z = modu(this.z+this.speed*dirs[this.dir][2],400);
+		this.z = modu(this.z+this.speed*dirs[this.dir][2],500);
 		this.steps+=1
 	}
 	else
-	{
-		this.dir = floor(random(0,dirs.length))
-		this.steps_for_dir = random(0,50)
+	{ floor(random(0,dirs.length))
+		let new_dir = dir_op[this.dir]
+		while(new_dir == dir_op[this.dir])
+		{
+			new_dir = floor(random(0,dirs.length))
+			
+		}
+		this.dir =new_dir
+		this.steps_for_dir = random(5,15)
 		this.steps = 0
 	}
   }
 
   draw()
   {
+	  noStroke()
 	  push()
 		fill(this.col,30,50)
-		stroke(this.col,55,55) 
+		//stroke(this.col,55,55) 
 		
-
+		ambientMaterial(this.col, 30, 50)
 		rotateX(1)
 		rotateY(0)
 		rotateZ(0)
-	  	translate(-width/2,-height/2)
+	  	translate(-width/2,-height/2,100)
 		translate(this.x,this.y,this.z)
 		
 		box(3,3,3)
@@ -62,7 +70,7 @@ class mover
 points_ =[]
 function setup() 
 {
-	createCanvas(400,400,WEBGL);
+	createCanvas(800,800,WEBGL);
 	colorMode(HSL,360,100,100);
 	for(i=0;i<10;i++)
 	{
@@ -84,12 +92,20 @@ let dirs=[
 	[0,0,-1]
 ]
 
+let dir_op=[
+	1,
+	0,
+	3,
+	2,
+	5,
+	4
+]
 
 
 function draw()
 {
 	noStroke()
-	
+	//pointLight(200, 200, 200,50,59)
 	//background(0)
 	for(i=0;i<points_.length;i++)
 	{
@@ -99,6 +115,7 @@ function draw()
 }
 function draw_()
 {
+	
 	background(40,0,0,0.5);
 
 	for (i=0;i<10;i++)
