@@ -81,3 +81,13 @@ li a{
     padding: 14px 16px;
     text-decoration: none;
 }
+
+li.norm{
+    color:black;
+    text-align: left;
+}
+
+a.norm{
+    color: black;
+    text-align: left;
+}

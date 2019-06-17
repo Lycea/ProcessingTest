@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+    <meta charset="utf-8" />
+    <!-- reloading things all x seconds (5 this case)-->
+    <!--<meta http-equiv="refresh" content="5"> -->
+    <link rel="stylesheet" href="{PATH_TO_CSS}"/>
+  </head>
+  <body>
+	<header>
+    SimpleSampleSummarySite
+  </header>
+		
+
+
+    <nav>
+      <ul class="navi">
+      <li class = "navi"><a href="{PATH_HOME}">home</a></li>
+      <li class = "navi"><a href="{PATH_HOME}">Blog</a></li>
+      <li class = "navi"><a href="{PATH_SKETCHES}">Sketches</a></li>
+      <li class = "navi"><a href="{PATH_HOME}">Recent added</a></li>
+      <li class = "navi"><a href="{PATH_HOME}">About</a></li>
+      </ul>
+    </nav>
+    <div class = "main">
+    <div class="content">
+        {CONTENT_OF_PAGE}
+    </div>
+
+    <!--Beginning sidebar -->
+      <div class="sidebar">
+        <div class="titlePane"> <b>About</b> </div>
+        <p></p>
+        <div>
+          This page is work in progress </br>
+          So please don't expect to much for now</br>
+          Yes the links above are not working</br>
+          <p></p>
+          And about me I'm an engineer trying to
+          buildt up this page and fill it with </br>
+          colorfull information and tutorials</br>
+          about:</br>
+          <ul>
+            <li> Programming</li>
+              <ul>
+                <li> Love2d</li>
+                <li> Processing</li>
+                <li> Python</li>
+              </ul>
+            <li> Projets</li>
+            <li> Tutorials</li>
+            <li> Digital art ?</li>
+            <li> ....</li>
+          </ul>
+        </div>
+        <p></p>
+        <div class="titlePane"> <b>Newest</b> </div>
+          <p>Some small samples</p>
+          <p>The  plugin lists</p>
+          <p>This whole page </p>
+
+        <div class="titlePane"> <b>Categories</b> </div>
+          <p>There is nothing to see for now</p>
+      </div>
+      
+    </div>
+    <div class="footer">some information</div>
+  </body>
+</html>
