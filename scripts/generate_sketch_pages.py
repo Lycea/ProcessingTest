@@ -1,8 +1,17 @@
 import os
 import datetime
+import sys
 
-sketch_name = "3DTest"
+sketch_name = ""
 
+
+
+if len(sys.argv)>1:
+    sketch_name =sys.argv[1]
+    print(sys.argv[1])
+else:
+    print("Please enter a name for the new sketch!")
+    exit()
 
 
 
@@ -10,12 +19,12 @@ sketch_name = "3DTest"
 
 path = ""
 #generate folder
-if not os.path.exists("../sketches/"+sketch_name):
-    os.mkdir("../sketches/"+sketch_name)
-    path ="../sketches/"+sketch_name
+if not os.path.exists("./../sketches/"+sketch_name):
+    os.mkdir("./../sketches/"+sketch_name)
+    path ="./../sketches/"+sketch_name
 else:
     time = datetime.datetime.now()
-    time_string = "../sketches/"+sketch_name+"_"+str(time.year)+"_"+str(time.month)+"_"+str(time.day)+"_"+str(time.hour)+"_"+str(time.minute)
+    time_string = "./../sketches/"+sketch_name+"_"+str(time.year)+"_"+str(time.month)+"_"+str(time.day)+"_"+str(time.hour)+"_"+str(time.minute)
     print(time_string)
     os.mkdir(time_string)
     path = time_string
@@ -23,7 +32,7 @@ else:
 #generate pde file based on template
 
 #load in the template
-temp_f = open("../templates/pde_files/basic","r")
+temp_f = open("./../templates/pde_files/basic","r")
 temp_txt = temp_f.read()
 temp_f.close()
 
@@ -34,7 +43,7 @@ script.close()
 
 
 #generate html file based on template
-temp_f = open("../templates/html_files/pde_start_file","r")
+temp_f = open("./../templates/html_files/pde_start_file","r")
 
 tmp_txt=[]
 #check all lines and add script line for inclusion of script
