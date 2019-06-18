@@ -9,13 +9,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 #print(dir_path)
 
 #find the importent directories
-base_path = dir_path[:dir_path.rfind("/")]
-sketch_path = base_path+"/sketches"
+base_path = dir_path[:dir_path.rfind(os.sep)]
+
+sketch_path = os.path.join(base_path,"sketches")
 #print(base_path)
 #print(sketch_path)
 
 #create the sketch overview page
-sketch_list =open(sketch_path+"/sketch_list.html","w")
+sketch_list =open(os.path.join(sketch_path,"sketch_list.html"),"w")
 
 
 
@@ -26,7 +27,10 @@ template_file.close()
 
 list_text = "<ul>\n"
 
+
+
 list_text = "<p>Here you find an overview of all created sketches: </p>"+list_text
+list_text = '<div class="content">'+list_text
 count = 0
 #find all sketches
 for root,dirs,files in os.walk(sketch_path):
@@ -49,6 +53,7 @@ for root,dirs,files in os.walk(sketch_path):
 
 
 list_text+="</ul>"
+list_text+="</div>"
 
 #replace placeholders
 base_text = base_text.replace("{PATH_TO_CSS}","../style.css")

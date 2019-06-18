@@ -8,12 +8,9 @@ sketch_name = ""
 
 if len(sys.argv)>1:
     sketch_name =sys.argv[1]
-    print(sys.argv[1])
 else:
     print("Please enter a name for the new sketch!")
     exit()
-
-
 
 
 
