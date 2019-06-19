@@ -6,20 +6,21 @@ function setup()
 	max_iter = 150
 	size =5
 	createCanvas(400,400);
-	colorMode(HSL,360,100,100);
+	colorMode(RGB,255,255,255);
 	noLoop()
 }
 
 
 function draw()
 {
+	noStroke()
   for(var y=0;y<floor(height/size);y++)
   { 
 
 	  //print("test")
 	  for(var x=0;x<floor(width/size);x++)
 	  {
-		  real=y*15
+		  real=y/70.8
 		  imagi= x/100
 		  
 		  cr = real
@@ -41,11 +42,12 @@ function draw()
 			  }
 			  tries+=1
 		  }
-		var light = map(tries,0,max_iter,0,1)
-		light = map(sqrt(light), 0, 1, 0, 255);
-		fill(light,light,light)
+		var bright = map(tries,0,max_iter,0,1)
+		light_ = map(sqrt(bright), 0, 1, 0, 255);
+		fill(light_,light_,light_)
 		//print(x+" "+y)
 		rect(x*size,y*size,size,size)
+		
 	  }
   }
 
