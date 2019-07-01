@@ -2,6 +2,7 @@ from tokenizer.token import *
 from tokenizer.TokenList import *
 from tokenizer.BaseScanner import *
 from tokenizer.TextScanner import *
+from tokenizer.HeaderScanner import *
 
 
 

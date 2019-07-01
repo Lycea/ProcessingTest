@@ -12,6 +12,8 @@ class cHeaderParser(cBaseParser):
 
           idx =0
           hash_count=0
+
+          #find if there is a header
           while True:
             if tokens.peek_idx(idx,"HASH"):
                 hash_count+=1
@@ -19,6 +21,10 @@ class cHeaderParser(cBaseParser):
             else:
                 break
 
-        return cNode("HEADER")
 
-          return cNode.null()
+          if hash_count >= 1:
+              if
+            return cNode("HEADER"+str(hash_count),"",hash_count)
+          else:
+            return cNode.null()
+

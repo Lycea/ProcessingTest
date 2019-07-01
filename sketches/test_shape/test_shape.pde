@@ -1,10 +1,13 @@
 var base_col =0
+var z_off =0
+var size = 0
 function setup() 
 {
 	createCanvas(400,400);
 	colorMode(HSL,360,100,100);
 	base_col =random(0,250)
-	noLoop()
+	size = random(5,20)
+	
 }
 
 
@@ -13,12 +16,16 @@ function hexagon(x,y,size)
 	line_size =size
 	//line_size = random(10,50)
 
-	line_size
+
 
 	//x= random(line_size,width-line_size)
 	//y= random(line_size,height-line_size)
 	strokeWeight(2)
-	fill(base_col,random(25,75),random(25,75),1)
+	//fill(base_col,random(25,75),random(25,75),1)
+
+	sat =map(noise(x*0.5,y*0.5,z_off),0,1,25,75)
+	light = map(noise((x+1000)*0.5,(y+1000)*0.5,z_off+1000),0,1,25,75)
+	fill(base_col,light,sat,1)
 	beginShape()
 		vertex(x,y)//left
 		vertex(x+line_size*0.5,y-line_size)//up left
@@ -33,7 +40,7 @@ function hexagon(x,y,size)
 function draw()
 {
 	
-	size = random(5,20)
+	
 
 	rows= height/size*2
 	collumns = width/(size*2)
@@ -47,5 +54,5 @@ function draw()
 		}
 	}
 	
-
+	z_off+=0.007
 }

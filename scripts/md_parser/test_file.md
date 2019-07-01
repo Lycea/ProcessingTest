@@ -1,4 +1,6 @@
 **This is a simple test text**
+#Title
+# Title2
 
 Well now that this is cleared I want to say  
 this is quite interesting in the way it works

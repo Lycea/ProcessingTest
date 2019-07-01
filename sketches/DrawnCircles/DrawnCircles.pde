@@ -66,7 +66,7 @@ function draw_circle(idx)
 	ellipse(x,y,5,5)
 	
 
-	fill_circ(x,y,size)
+	//fill_circ(x,y,size)
 	stroke(random(0,360),50,50,alpha_)
 	for(var i=0;i<num_circs;i++)
 	{
