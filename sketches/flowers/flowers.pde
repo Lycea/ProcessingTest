@@ -51,8 +51,26 @@ function petal(point_a,point_b,point_c,angle,width,height,percentage_max)
 
    //stroke(160,100,50)
    //fill(255,50,50)
+    
+   mid_point = point_on_circ(height,angle,point_c.x,point_c.y) //the tip
+   mid_height =point_on_circ(height*percentage_max,angle-180,mid_point.x,mid_point.y)
 
-   mid_point = point_on_circ(height,angle,point_c.x,point_c.y)
+   chitter_left  = point_on_circ(-width,angle-90,mid_height.x,mid_height.y)
+   chitter_right = point_on_circ(width,angle-90,mid_height.x,mid_height.y)
+
+	beginShape()
+		//start point
+		curveVertex(point_a.x,point_a.y)
+		curveVertex(point_a.x,point_a.y)
+
+		curveVertex(chitter_left.x,chitter_left.y)
+		curveVertex(mid_point.x,mid_point.y)
+		curveVertex(chitter_right.x,chitter_right.y)
+
+		curveVertex(point_b.x,point_b.y)
+		curveVertex(point_b.x,point_b.y)
+
+	endShape()
 
    /*ellipse(point_a.x,point_a.y,3,3)
    ellipse(point_b.x,point_b.y,3,3)
@@ -60,9 +78,9 @@ function petal(point_a,point_b,point_c,angle,width,height,percentage_max)
    
    ellipse(mid_point.x, mid_point.y, 3, 3)*/
 
-
-   curve_(point_a,mid_point,-width,angle,height,percentage_max)
-   curve_(point_b,mid_point,width,angle,height,percentage_max)
+   
+   //curve_(point_a,mid_point,-width,angle,height,percentage_max)
+   //curve_(point_b,mid_point,width,angle,height,percentage_max)
    print("************")
 }
 
@@ -103,10 +121,15 @@ function draw()
   background(0)
 
 
-  for(let lay=0;lay<4;lay++)
+  for(let lay=0;lay<10;lay++)
   {
 	fill((170+lay*20)%360,50,50,1)
-	flower_layer(4,500/lay,150-lay*20,lay*45,4)
+	stroke((170+lay*20)%360,50,60,1)
+	flower_layer(5,40/lay,150-lay*20,0+lay*10,0.5)
+
+	fill((200+lay*20)%360,70,50,1)
+	stroke((200+lay*20)%360,70,60,1)
+	flower_layer(5,20/lay,150-lay*20,40+lay*10,1)
   }
   
   stroke(255)
