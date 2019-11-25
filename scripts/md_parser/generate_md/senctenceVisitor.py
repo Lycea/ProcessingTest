@@ -4,6 +4,7 @@ from generate_md.TextVisitor import *
 from generate_md.StrikeVisitor import *
 from generate_md.BreakVisitor import *
 from generate_md.BoldItalicVisitor import *
+from generate_md.HeaderVisitor import *
 
 class cSentenceVisitor():
     def __init__(self):
@@ -13,7 +14,12 @@ class cSentenceVisitor():
             "EMPHASISE":cEmphasiseVisitor(),
             "STRIKE":cStrikeVisitor(),
             "BREAK":cBreakVisitor(),
-            "BOLDITALIC":cBoldItalicVisitor()
+            "BOLDITALIC":cBoldItalicVisitor(),
+            "HEADER1":cHeaderVisitor(),
+            "HEADER2":cHeaderVisitor(),
+            "HEADER3":cHeaderVisitor(),
+            "HEADER4":cHeaderVisitor(),
+            "HEADER5":cHeaderVisitor()
         }
     def visit(self,tree):
         concat_txt = ""

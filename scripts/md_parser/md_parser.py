@@ -45,7 +45,9 @@ def parse_md(raw_md_text):
 
 
 
-
+print(os.path.dirname(os.path.abspath(__file__)))
+print(os.getcwd())
+#f=open("./scripts/md_parser/test_file.md","r")
 f=open("test_file.md","r")
 g=open("test_file.html","w")
 g.write(parse_md(f.read()))
