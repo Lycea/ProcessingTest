@@ -8,6 +8,7 @@ class cParser():
         if body.consumed != tokens.count():
             print(str(body.consumed)+" "+str(tokens.count()))
             print("The token count dosn't match something is wrong")
+            print("Last successfull consumed was:",tokens.t_list[body.consumed])
         else:
             print(str(body.consumed)+" "+str(tokens.count()))
         return body

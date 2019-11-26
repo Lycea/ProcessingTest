@@ -1,3 +1,3 @@
 class cBreakVisitor():
     def visit(self,node):
-        return "</br>"
+        return "</br>\n"

@@ -30,7 +30,7 @@ class cHeaderParser(cBaseParser):
             while idx<tokens.count():
                 print(tokens.peek_idx(idx+1,"NEWLINE"),tokens.getValueAt(idx))
                 
-                if tokens.peek_idx(idx,"NEWLINE"):
+                if tokens.peek_idx(idx,"NEWLINE") or tokens.peek_idx(idx,"EOF"):
                     break
                 else:
                     tmp_val +=tokens.getValueAt(idx+1)
@@ -40,7 +40,10 @@ class cHeaderParser(cBaseParser):
 
             print("end value:",tmp_val)
             print("parsing end")
+            print(idx,tokens.count())
             print("------------")
+
+            
             return cNode("HEADER"+str( min(hash_count,5)),tmp_val,hash_count)
           else:
             return cNode.null()

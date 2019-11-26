@@ -9,7 +9,10 @@ from tokenizer.TokenList import *
 
 class cSentenceAndEofParser(cBaseParser):
     def match(self,tokens):
+        print("-------------------------")
+        print("sentence and eof parser")
         result =match_star(tokens,cSentenceParser())
+        
         if len(result[0]) == 0:
             return cNode.null()
 
@@ -18,11 +21,18 @@ class cSentenceAndEofParser(cBaseParser):
             tmp.t_list = tokens
             tokens = tmp
 
+
+        newline_result =match_star(tokens.t_list[result[1]:],cNewlineParser())
+        if len(newline_result[0])>0:
+            result[1]+=newline_result
+
+
         if tokens.peek_idx(result[1],"EOF"):
             result[1]+=1
         else:
-            if tokens.peek_idx(result[1],"NEWLINE") and tokens.peek_idx(result[1]+1,"EOF"):
-                result[1]+=2
-            else:
-                return cNode.null()
+            return cNode.null()
+            #if tokens.peek_idx(result[1],"NEWLINE") and tokens.peek_idx(result[1]+1,"EOF"):
+            #    result[1]+=2
+            #else:
+                
         return cParagraphNode(result[0],result[1])

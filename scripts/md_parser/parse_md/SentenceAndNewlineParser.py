@@ -11,7 +11,7 @@ from tokenizer.TokenList import *
 class cSentenceAndNewlineParser(cBaseParser):
     def match(self,tokens):
         result = match_star(tokens,cSentenceParser())
-
+        print("-------\nsentence and newline")
         #TODO check if this works correct, could be wrong by one
         if len(result[0]) == 0:
             return cNode.null()
@@ -20,9 +20,20 @@ class cSentenceAndNewlineParser(cBaseParser):
             tmp =cTokenList()
             tmp.t_list = tokens
             tokens = tmp
+
+        #nl_count = 0
+        #while tokens.peek_idx(result[1],"NEWLINE"):
+        #    result[1]+=1
+        #    nl_count+=1
+
+        newline_result =match_star(tokens.t_list[result[1]:],cNewlineParser())
+        if len(newline_result[0])>0:
+            result[1]+=newline_result[1]
+
+        if newline_result[1]>0:
             
-        if tokens.peek_idx(result[1],"NEWLINE") and tokens.peek_idx(result[1]+1,"NEWLINE"):
-            result[1] += 2
+        #if tokens.peek_idx(result[1],"NEWLINE") and tokens.peek_idx(result[1]+1,"NEWLINE"):
+        #    result[1] += 2
 
             return cParagraphNode(result[0],result[1])
         else:

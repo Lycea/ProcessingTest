@@ -17,3 +17,6 @@ class cToken():
 
     def getSize(self):
         return len(self.value)
+
+    def __str__(self):
+        return "<"+self.type +";"+self.value+">"
