@@ -4,19 +4,32 @@ import sys
 
 
 
-
+sketch_base ="./../sketches/"
 def create_page(name):
     sketch_name = name
 
 
     path = ""
-    #generate folder
-    if not os.path.exists("./../sketches/"+sketch_name):
-        os.mkdir("./../sketches/"+sketch_name)
-        path ="./../sketches/"+sketch_name
+    #generate folders recursuveky
+    if not os.path.exists(sketch_base+sketch_name):
+
+        sketch_name.replace("\\","/")
+
+
+        res =sketch_name.split("/")
+        
+        for idx in range(len(res)+1):
+            
+            print(os.path.join(sketch_base,"/".join(res[:idx])))
+            if not os.path.exists(os.path.join(sketch_base,"/".join(res[:idx]))):
+                os.mkdir(os.path.join(sketch_base,"/".join(res[:idx])))
+                path = os.path.join(sketch_base,"/".join(res[:idx]))
+                pass
+        sketch_name=res[-1]
+        print("")
     else:
         time = datetime.datetime.now()
-        time_string = "./../sketches/"+sketch_name+"_"+str(time.year)+"_"+str(time.month)+"_"+str(time.day)+"_"+str(time.hour)+"_"+str(time.minute)
+        time_string = sketch_base+sketch_name+"_"+str(time.year)+"_"+str(time.month)+"_"+str(time.day)+"_"+str(time.hour)+"_"+str(time.minute)
         print(time_string)
         os.mkdir(time_string)
         path = time_string
