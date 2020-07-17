@@ -4,6 +4,84 @@ import sys
 
 
 
+def create_page_tree(tree,path_base,depth=0,base=""):
+    print("base:"+path_base)
+    tree["name"]=os.path.basename(path_base)
+    tree["has_info"]=False
+
+    found_dirs = False
+    for item in sorted(os.listdir(path_base)):
+        deeper_path = os.path.join(path_base,item)
+        
+        
+        if os.path.isdir(deeper_path)==True:
+            tree[item]={"has_child":True,"is_sketch":False}
+            print(depth*"  "+"In sub tree..")
+            print(depth*"  "+str(tree))
+            create_page_tree(tree[item],deeper_path,depth+1,base)
+            print("")
+
+            found_dirs =True
+        else:
+            if item.find(os.path.basename(path_base))!=-1 and deeper_path.endswith(".html"):
+                tree["is_sketch"]= True
+                tree["path"]=deeper_path.replace(base,"")
+                print(depth*"  "+"Found sketch")
+                print(depth*"  "+str(tree))
+
+
+    if not found_dirs:
+        tree["has_child"]=False
+
+    print(depth*"  "+str(tree)+"\n")
+    
+         
+
+    
+
+def process_page_tree(tree,txt,depth=0,is_child=False):
+    
+
+
+    black_list =["is_sketch","name","has_child","has_info","path"]
+    for key in sorted(tree.keys()):
+        if key not in black_list:
+            header_level = max(1,min(depth+3,7))
+            header_str   = "div"#"h"+str(header_level)
+            print(key)
+            if key == "2_Bouncing_with_vector":
+                print(tree[key])
+            if tree[key]["has_child"] and not tree[key]["is_sketch"]:
+                if is_child:
+                    txt+=depth*"  "+"<"+header_str+" class='collaps_title'>"+key+"</"+header_str+">\n<div class='content_div'>"
+                    txt= process_page_tree(tree[key],txt,depth+1,True)
+
+                    txt+=depth*"  "+"</div>\n"
+                else:
+                    txt+=depth*"  "+"<"+header_str+" class='collaps_title'>"+key+"</"+header_str+">\n<div class='content_div'>"
+                    txt= process_page_tree(tree[key],txt,depth+1,True)
+
+                    txt+=depth*"  "+"</div>\n"
+            elif tree[key]["has_child"]and tree[key]["is_sketch"]:
+                pass
+            elif not tree[key]["has_child"]and tree[key]["is_sketch"] and tree[key]["path"][-4:]=="html" :
+                
+                #print(tree[key]["path"])
+                
+                if is_child:
+                    txt+=depth*"  "
+                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
+                    txt+="\n"
+                else:
+                    txt+=depth*"  "+'<li class="norm">'
+                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
+                    txt+="</li>\n"
+    
+            
+            
+    print(txt)
+    return txt
+
 
 def generate_list(preview=False):
     create_preview_list = preview
@@ -34,31 +112,73 @@ def generate_list(preview=False):
 
 
 
-    list_text = "<p>Here you find an overview of all created sketches: </p>"+list_text
+    list_text = """
+            <style>
+            .content_div {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            }
+            </style>
+
+            <p>Here you find an overview of all created sketches: </p>"""+list_text
     list_text = '<div class="content">'+list_text
     count = 0
     #find all sketches
-    for root,dirs,files in os.walk(sketch_path):
-        for dir in sorted(dirs):
-            if create_preview_list == False:
-                #add them as link
-                count +=1 
-                list_text+='\t<li class="norm">'
-                list_text+='<a class="norm" href="'+dir+'/'+dir+'.html'+'">'+dir+'</a>'
-                list_text+="</li>\n"
 
-            else:
-                count +=1
-                #header line
-                list_text+="\t<h3>"
-                list_text+='<a class="norm" href="'+dir+'/'+dir+'.html'+'">'+dir+':</a>'
-                list_text+="</h3>\n"
-                list_text+='<object data="'+dir+'/'+dir+'.html'+'" type="text/html" width = "500px" height="450px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>'
-                
+    sketch_tree={}
+    
+
+    for item in os.listdir(sketch_path):
+        print("i am here: ",sketch_path,item)
+        deeper_path = os.path.join(sketch_path,item)
+        
+        if os.path.isdir(deeper_path)==True:
+            sketch_tree[item]={"has_child":True,"is_sketch":False}
+            create_page_tree(sketch_tree[item],deeper_path,0,sketch_path+"/")
+    
+    if len(sketch_tree.keys())>4:
+        list_text=process_page_tree(sketch_tree,list_text)
+
+
+     
 
 
     list_text+="</ul>"
     list_text+="</div>"
+
+    list_text+="""\n\n\n<script type='text/javascript'>
+                   var coll = document.getElementsByClassName("collaps_title");
+                    var i;
+                    console.log("hi")
+                    for (i = 0; i < coll.length; i++) 
+                    {
+                        console.log(coll[i])
+                        coll[i].addEventListener("click", function() 
+                        {
+                            console.log("check it ...")
+                            this.classList.toggle("active");
+                            var content = this.nextElementSibling;
+                            console.log(content)
+                            
+                            if (content.style.maxHeight)
+                            {
+                                console.log("collapse")
+                                content.style.maxHeight = null;
+                            } 
+                            else
+                            {
+                                console.log("no collapse")
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            } 
+                        });
+                    }
+                    </script>\n\n\n
+                """
+
+    
 
     #replace placeholders
     base_text = base_text.replace("{PATH_TO_CSS}","../style.css")

@@ -5,7 +5,7 @@ let y_start = 1
 let y_mod = 0.2
 
 let z = 0
-let z_inc = 0//0.01
+let z_inc = 0
 
 let rec_x_size = 10
 let rec_y_size = 10

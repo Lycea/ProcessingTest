@@ -1,7 +1,7 @@
 var lines =[]
 var y_mod = 0.05
 
-var n_points = 5
+var n_points = 20
 
 function setup() 
 {
@@ -23,7 +23,7 @@ function draw()
 	stroke(col,50,50)
 	fill(col,50,50)
 
-	print(lines[1])
+	
 	for(var i=0;i<lines.length;i++)
 	{
 		var line_ = lines[i]

@@ -13,12 +13,12 @@ var alive_chance =30
 //rule set
  //smaller than that is lonely
 var lonely = 3
-
+ 
 //between them it is allive
 var alive_min = 3
 var alive_max = 3
 
-//greater and equal then this dies
+//greater then this dies
 var over_popu = 3
 
 //to become alive
@@ -85,10 +85,6 @@ class pixel
 			if(alive < lonely)
 			{
 				return DEAD
-			}
-			else if(alive>= alive_min && alive<= alive_max)
-			{
-				return ALIVE
 			}
 			else if(alive>over_popu)
 			{
