@@ -70,7 +70,7 @@ def process_page_tree(tree,txt,depth=0,is_child=False):
                 
                 if is_child:
                     txt+=depth*"  "
-                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
+                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a></br>'
                     txt+="\n"
                 else:
                     txt+=depth*"  "+'<li class="norm">'
@@ -102,8 +102,8 @@ def generate_list(preview=False):
     sketch_list =open(os.path.join(sketch_path,"sketch_list.html"),"w")
 
 
-
-    template_file = open("./../templates/html_files/style_default","r")
+    
+    template_file = open("../templates/html_files/style_default","r")
     base_text = template_file.read()
 
     template_file.close()
@@ -114,15 +114,29 @@ def generate_list(preview=False):
 
     list_text = """
             <style>
-            .content_div {
-            padding: 0 18px;
-            background-color: white;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            }
-            </style>
+            .collaps_title {
+                          background-color: #777;
+                          color: white;
+                          cursor: pointer;
+                          padding: 18px;
+                          width: 100%;
+                          border: none;
+                          text-align: left;
+                          outline: none;
+                          font-size: 15px;
+                        }
 
+              .active, .collaps_title:hover {
+                          background-color: #555;
+                        }
+
+              .content_div {
+                          padding: 0 18px;
+                          display: none;
+                          overflow: hidden;
+                          background-color: #f1f1f1;
+                        }
+            </style>
             <p>Here you find an overview of all created sketches: </p>"""+list_text
     list_text = '<div class="content">'+list_text
     count = 0
@@ -137,7 +151,7 @@ def generate_list(preview=False):
         
         if os.path.isdir(deeper_path)==True:
             sketch_tree[item]={"has_child":True,"is_sketch":False}
-            create_page_tree(sketch_tree[item],deeper_path,0,sketch_path+"/")
+            create_page_tree(sketch_tree[item],deeper_path,0,sketch_path+os.path.sep)
     
     if len(sketch_tree.keys())>4:
         list_text=process_page_tree(sketch_tree,list_text)
@@ -150,32 +164,21 @@ def generate_list(preview=False):
     list_text+="</div>"
 
     list_text+="""\n\n\n<script type='text/javascript'>
-                   var coll = document.getElementsByClassName("collaps_title");
-                    var i;
-                    console.log("hi")
-                    for (i = 0; i < coll.length; i++) 
-                    {
-                        console.log(coll[i])
-                        coll[i].addEventListener("click", function() 
-                        {
-                            console.log("check it ...")
-                            this.classList.toggle("active");
-                            var content = this.nextElementSibling;
-                            console.log(content)
-                            
-                            if (content.style.maxHeight)
-                            {
-                                console.log("collapse")
-                                content.style.maxHeight = null;
-                            } 
-                            else
-                            {
-                                console.log("no collapse")
-                                content.style.maxHeight = content.scrollHeight + "px";
-                            } 
-                        });
-                    }
-                    </script>\n\n\n
+                  var coll = document.getElementsByClassName("collaps_title");
+                  var i;
+
+                  for (i = 0; i < coll.length; i++) {
+                    coll[i].addEventListener("click", function() {
+                      this.classList.toggle("active");
+                      var content = this.nextElementSibling;
+                      if (content.style.display === "block") {
+                        content.style.display = "none";
+                      } else {
+                        content.style.display = "block";
+                      }
+                    });
+                  }
+                </script>\n\n\n
                 """
 
     
