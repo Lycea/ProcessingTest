@@ -87,7 +87,18 @@ li.norm{
     text-align: left;
 }
 
-a.norm{
+  
+  /* selected link */
+  a.norm {
     color: black;
-    text-align: left;
+    text-decoration: none;
+    
+  } 
+
+p.sketch_item{
+    background-color: #eee9a8;
+    padding: 20px;
+    width: 100%;
+    color : black;
 }
+
