@@ -40,17 +40,12 @@ def create_page_tree(tree,path_base,depth=0,base=""):
     
 
 def process_page_tree(tree,txt,depth=0,is_child=False):
-    
-
-
     black_list =["is_sketch","name","has_child","has_info","path"]
     for key in sorted(tree.keys()):
         if key not in black_list:
             header_level = max(1,min(depth+3,7))
             header_str   = "div"#"h"+str(header_level)
             print(key)
-            if key == "2_Bouncing_with_vector":
-                print(tree[key])
             if tree[key]["has_child"] and not tree[key]["is_sketch"]:
                 if is_child:
                     txt+=depth*"  "+"<"+header_str+" class='collaps_title'>"+key+"</"+header_str+">\n<div class='content_div'>"
@@ -73,9 +68,9 @@ def process_page_tree(tree,txt,depth=0,is_child=False):
                     txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a></br>'
                     txt+="\n"
                 else:
-                    txt+=depth*"  "+'<li class="norm">'
+                    txt+=depth*"  "+'<p class="sketch_item">'
                     txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
-                    txt+="</li>\n"
+                    txt+="</p>\n"
     
             
             
@@ -108,7 +103,7 @@ def generate_list(preview=False):
 
     template_file.close()
 
-    list_text = "<ul>\n"
+    list_text = "<p>\n"
 
 
 
@@ -160,7 +155,7 @@ def generate_list(preview=False):
      
 
 
-    list_text+="</ul>"
+    list_text+="</p>"
     list_text+="</div>"
 
     list_text+="""\n\n\n<script type='text/javascript'>
