@@ -1,0 +1,12 @@
+{
+    "libs" : [
+
+    ],
+    "loadEagerly": [
+        "libs/*.js",
+        "libs/addons/*.js"
+    ],
+    "plugins" : {
+        "commonjs" : {}
+    }
+}
