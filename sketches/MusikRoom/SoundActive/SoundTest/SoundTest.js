@@ -23,7 +23,7 @@ function setup()
     cnv.mousePressed(userStartAudio);
 	  colorMode(HSL,360,100,100);
 
-    canv_halve = height/2;
+    canv_halve = height/3;
     strokeWeight(stroke_size)
 
     if(calc_pps == true)
@@ -32,8 +32,7 @@ function setup()
     }
 
     //sound setup ...
-    mic = new p5.AudioIn();
-    
+    mic = new p5.AudioIn();    
     mic.start();
 
     fft = new p5.FFT(1, samples );
@@ -42,11 +41,6 @@ function setup()
     //frameRate(10)
     //noLoop();
 }
-
-
-
-
-
 
 function draw()
 {
@@ -57,7 +51,7 @@ function draw()
     wave = fft.waveform();
     //console.log(fft.waveform())
     let last_line = {x : 0,
-                     y : height/2};
+                     y : canv_halve};
     
     for(let i = 0 ; i<wave.length; i++)
     {
@@ -73,6 +67,7 @@ function draw()
     color += 0.5
 } 
 
-function mousePressed() {
+function mousePressed()
+{
     userStartAudio();
 }
