@@ -1,0 +1,16 @@
+config: 
+  direct_copy_files:
+    - style.css
+    - index.html
+    - blog_main.html
+  direct_copy_folders:
+    -  sketches
+    -  libs
+  special_copy:
+    - content/posts
+  options:
+    generate_all: true
+    generate_sketchlist: false
+    generate_blog_posts: false
+    output_path: "generated"
+    template_location: "templates"
