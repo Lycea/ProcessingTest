@@ -1,0 +1,38 @@
+#+DATE:<2023-05-28 Sun> 
+#+NAME: How to embed p5js in another page
+
+P5.js is a small js library which wraps around
+the canvas and is easily used to create a simple
+little generative sketch all by itself, but what if
+you want to include it into another web page, how should you do that ?
+That is what I want to elaborate here further.
+
+*** Link to the page directly
+
+Here you can see one of my first sketches for example on a seperate link:
+
+[[../../sketches/rectangles_1/rectangles_1.html]]
+
+That works fine you will end up there without problem but it is a new
+page and disturbs the flow of the post.
+
+So what else can we do than?
+
+*** Insert a video about the things you want to show
+One idea would be simply create a video of the things that you want to show:
+
+TODO insert a video here.
+
+That is nice and everything and woll definitely work for a lot of things
+but for my case I have interacive pages or sketches which will run endless
+so that does not fit to what I potentially want to show with it but at least
+a video will not distrube the reader to somewhere else.
+
+
+*** Insert the sketch directly
+
+The other way is to include the sketch itself into the page.
+
+#+BEGIN_EXPORT html
+  <object data="../../sketches/snow_flakes/snow_flakes.html" type="text/html" width="50px" height="50px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>
+#+END_EXPORT
