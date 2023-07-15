@@ -8,6 +8,7 @@
     <!-- reloading things all x seconds (5 this case)-->
     <!--<meta http-equiv="refresh" content="5"> -->
     <link rel="stylesheet" href="{PATH_TO_CSS}"/>
+    <link rel="stylesheet" href="sketch_list.css">
   </head>
   <body>
 	<header>
@@ -62,8 +63,8 @@
           <p>The  plugin lists</p>
           <p>This whole page </p>
 
-        <div class="titlePane"> <b>Categories</b> </div>
-          <p>There is nothing to see for now</p>
+          <div class="titlePane"> <b>Categories</b> </div>
+        <p>There is nothing to see for now</p>
       </div>
       
     </div>

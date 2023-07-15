@@ -95,10 +95,50 @@ li.norm{
     
   } 
 
-p.sketch_item{
-    background-color: #eee9a8;
-    padding: 20px;
+div.sketch_item{
+//    background-color: #eee9a8;
+    padding: 18px;
     width: 100%;
     color : black;
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+    border-bottom-width: 1px;
+    margin-bottom: 10px;
+
+/*
+    background: 
+                radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 3px, transparent 3px) 100% 0%/8px 8px no-repeat,
+                radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 3px, transparent 3px) 0% 100%/8px 8px no-repeat,
+                radial-gradient(circle at 0 0, #ffffff 0, #ffffff 3px, transparent 3px) 100% 100%/8px 8px no-repeat,
+                linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 10px) calc(100% - 16px) no-repeat,
+                linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 16px) calc(100% - 10px) no-repeat,
+                linear-gradient(147deg, transparent 25%, #48abe0 25%, #48abe0 50%, transparent 50%, transparent 75%, #48abe0 75%)
+*/
 }
 
+div.sketch_item:after{
+    //background-color: #eee9a8;
+    padding: 18px;
+    width: 10%;
+    color : black;
+    bottom: -5px;
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+    border-bottom-width: 1px;
+    margin-bottom: 10px;                   
+}
+
+
+/* canvas p5 adjusts  */
+canvas {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+html, body {
+    border: 0px; 
+    margin: 0px;
+    padding: 0px;
+}
