@@ -1,7 +1,6 @@
 config: 
   direct_copy_files:
     - style.css
-    - index.html
     - blog_main.html
   direct_copy_folders:
     -  sketches
@@ -14,3 +13,5 @@ config:
     generate_blog_posts: false
     output_path: "generated"
     template_location: "templates"
+    start_template: "index"
+
