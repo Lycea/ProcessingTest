@@ -1,0 +1,35 @@
+
+      <div class="sidebar">
+        <div class="titlePane"> <b>About</b> </div>
+        <p></p>
+        <div>
+          This page is work in progress </br>
+          So please don't expect to much for now</br>
+          Yes the links above are not working</br>
+          <p></p>
+          And about me I'm an engineer trying to
+          buildt up this page and fill it with </br>
+          colorfull information and tutorials</br>
+          about:</br>
+          <ul>
+            <li> Programming</li>
+              <ul>
+                <li> Love2d</li>
+                <li> Processing</li>
+                <li> Python</li>
+              </ul>
+            <li> Projets</li>
+            <li> Tutorials</li>
+            <li> Digital art ?</li>
+            <li> ....</li>
+          </ul>
+        </div>
+        <p></p>
+        <div class="titlePane"> <b>Newest</b> </div>
+          <p>Some small samples</p>
+          <p>The  plugin lists</p>
+          <p>This whole page </p>
+
+        <div class="titlePane"> <b>Categories</b> </div>
+          <p>There is nothing to see for now</p>
+      </div>

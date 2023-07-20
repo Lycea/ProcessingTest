@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.sound.min.js"></script>
+    <meta charset="utf-8" />
+    <!-- reloading things all x seconds (5 this case)-->
+    <!--<meta http-equiv="refresh" content="5"> -->
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+<body>
+{{TEMPLATE:content/base_header}}
+
+
+  <div class="main">
+    {{TEMPLATE:content/main_content}}
+    {{TEMPLATE:content/base_side}}
+  </div>
+  {{TEMPLATE:content/base_footer}}
+ </body>
+</html>
