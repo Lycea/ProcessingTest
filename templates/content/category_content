@@ -1,0 +1,14 @@
+<div class="content">
+    <section>
+      <h3> {{ category.name }} </h3>
+      <h4> POSTS </h4>
+
+      <ul>
+      {{FOR ${post} in ${cagegory.posts} DO{
+        <li>
+          <a href="${post.url}"> ${post.name} </a>
+        </li>
+      }END}}
+      </ul>
+    </section>
+</div>

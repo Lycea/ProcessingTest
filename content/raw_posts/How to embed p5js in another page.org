@@ -18,6 +18,7 @@ page and disturbs the flow of the post.
 
 So what else can we do than?
 
+
 *** Insert a video about the things you want to show
 One idea would be simply create a video of the things that you want to show:
 
@@ -29,10 +30,15 @@ so that does not fit to what I potentially want to show with it but at least
 a video will not distrube the reader to somewhere else.
 
 
+
+
+
 *** Insert the sketch directly
 
 The other way is to include the sketch itself into the page.
 
 #+BEGIN_EXPORT html
-  <object data="../../sketches/snow_flakes/snow_flakes.html" type="text/html" width="50px" height="50px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>
+  <object data="../../sketches/snow_flakes/snow_flakes.html" type="text/html" width="50px" style="overflow:hidden; min-width: 101%; min-height: 101%"></object>
 #+END_EXPORT
+
+test

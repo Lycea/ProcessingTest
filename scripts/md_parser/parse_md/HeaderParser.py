@@ -23,7 +23,6 @@ class cHeaderParser(cBaseParser):
 
 
           if hash_count >= 1:
-              if
             return cNode("HEADER"+str(hash_count),"",hash_count)
           else:
             return cNode.null()

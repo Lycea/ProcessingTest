@@ -2,11 +2,16 @@ import yaml
 import shutil
 import os
 import re
+
+
 import check_yaml
+import template_parser
+
 
 pjoin = os.path.join
 
 base_path = "../.."
+page_depth = 2
 
 config = None
 config_path = os.path.join(base_path, "generator.yaml")
@@ -69,9 +74,32 @@ def generate_page(template_path):
     template_base_path = pjoin(base_path, config["config"]["options"].get("template_location","templates"))
 
     output_path = pjoin(generatin_base_path, template_path+".html")
+    temp_parser = template_parser.TemplateParser().set_template_path(template_base_path)
+    
+    
 
     with open(pjoin(template_base_path, template_path)) as template_file:
         base_text = template_file.read()
+        print(base_text)
+
+        temp_parser.set_text(base_text)
+        #output_text = find_and_process_templates(base_text)
+        output_text = temp_parser.find_and_replace_templates(base_text)
+        print("---------------------")
+        print(output_text)
+        
+        with open(output_path, "w") as out_file:
+            out_file.write(output_text)
+
+def generate_post(post_path):
+    global template_base_path
+
+    print("generating full post")
+    template_base_path = pjoin(base_path, config["config"]["options"].get("template_location","templates"))
+    output_path        = pjoin(generatin_base_path, post_path.replace(base_path+"/",""))
+
+    with open(post_path) as post_file:
+        base_text = post_file.read()
         print(base_text)
 
         output_text = find_and_process_templates(base_text)
@@ -80,10 +108,11 @@ def generate_page(template_path):
 
         with open(output_path, "w") as out_file:
             out_file.write(output_text)
-        
+
 
 def start_generation():
     global config
+    global options
     #first of change the working directory to this folder, to make life easier...
     os.chdir( os.path.dirname(__file__))
 
@@ -91,8 +120,10 @@ def start_generation():
     if check_yaml.check_yaml() == False:
         print("Yaml is not valid / does not exist, check config")
         exit(-1)
-    
+
     config = load_yaml()
+    options = config["config"]["options"]
+
     if not check_base_config(config):
         exit(-1)
 
@@ -116,5 +147,20 @@ def start_generation():
             shutil.copy( pjoin(base_path, file) , pjoin(generatin_base_path, file))
 
     generate_page(config["config"]["options"].get("start_template", "default"))
+
+    if config["config"]["options"].get("generate_all")or \
+       config["config"]["options"].get("generate_blog_posts"):
+        full_posts_base_dir = options.get("post_directory","posts")
+
+        if os.path.exists( pjoin(generatin_base_path, full_posts_base_dir) ):
+            shutil.rmtree( pjoin(generatin_base_path, full_posts_base_dir))
+
+        os.makedirs(pjoin(generatin_base_path, full_posts_base_dir))
+
+        for file_name in os.listdir(base_path + "/" + options.get("post_directory","posts")):
+            if file_name.endswith(".html")== False:
+                continue
+            post_raw_path = os.path.join(base_path, options.get("post_directory","posts"),file_name)
+            generate_post(post_raw_path)
 
 start_generation()

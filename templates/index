@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css"/>
   </head>
 <body>
-{{TEMPLATE:content/base_header}}
+{{TEMPLATE:  content/base_header}}
 
 
   <div class="main">

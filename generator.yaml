@@ -5,8 +5,7 @@ config:
   direct_copy_folders:
     -  sketches
     -  libs
-  special_copy:
-    - content/posts
+#    -  "content/posts"
   options:
     generate_all: true
     generate_sketchlist: false
@@ -14,4 +13,4 @@ config:
     output_path: "generated"
     template_location: "templates"
     start_template: "index"
-
+    post_directory: "content/posts"
