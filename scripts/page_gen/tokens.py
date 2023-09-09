@@ -14,7 +14,7 @@ tok_alias["!"] = "NOT"
 tok_alias[","] = "COMMA"
 tok_alias[":"] = "COLON"
 tok_alias["/"] = "SLASH"
-#tok_alias["\n"] = "CHAR"
+tok_alias["\n"] = "SPACE"
 
 class toks():
     BRACE_OPEN = "BRACE_OPEN"

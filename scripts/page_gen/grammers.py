@@ -1,4 +1,6 @@
 
+import colorama
+
 from md_parser.parse_md.Node import cNode
 import md_parser.tokenizer.TokenList as TokenList
 import md_parser.parse_md.concerns
@@ -37,10 +39,16 @@ class PrintHelper():
         self.lvl -=1
         return self
 
+    def print_c(self,txt,col):
+        self.print(col + txt + colorama.Style.RESET_ALL )
+        return self
+
     def print(self,txt):
         lines = txt.split("\n")
         for line in lines:
             print(f"{self.lvl*'  '}{line}" )
+
+        return self
 
 
 p = PrintHelper()
@@ -53,6 +61,12 @@ def retype_tokens(tokens):
         return tmp
     else:
         return tokens
+
+
+
+def print_first_few(li):
+    for idx in range(0,5):
+        p.print(f"{idx}: {li.t_list[idx].type} {li.t_list[idx].value}  ")
 
 
 class PathPart():
@@ -98,8 +112,6 @@ class PathPart():
         return ret
 
 
-
-
 class ImportTemplate():
     def string_path(self,token_list):
         pass
@@ -131,7 +143,11 @@ class ImportTemplate():
                     matched = md_parser.parse_md.concerns.match_plus( token_list.t_list[2:] ,PathPart())
 
                     print("match",matched)
-                    ret = cNode("ImportTemplate","",res[1])
+                    print(matched[0][0])
+                    #ret = cNode("ImportTemplate","",res[1]+matched[1] )
+
+                    ret = nodes.cImportTemplate(matched[0][0].value)
+                    ret.consumed = res[1] + matched[1]
             else:
                 p.print(str(res[1]))
                 if token_list.getValueAt(2)=="TEMPLATE":
@@ -175,14 +191,9 @@ class VariableTemplate():
 
 
 
-def print_first_few(li):
-    for idx in range(0,5):
-        p.print(f"{idx}: {li.t_list[idx].type} {li.t_list[idx].value}  ")
-
-
 class AnyTemplate():
     def match(self,token_list):
-        p.print("ANY")
+        p.print(colorama.Fore.CYAN + "ANY TEMPLATE" + colorama.Style.RESET_ALL)
         p.u()
         print_first_few(token_list)
         p.print("sub")
@@ -198,35 +209,78 @@ class AnyTemplate():
                                                     RepeatTemplate(),
                                                     VariableTemplate()
                                                 ])
-            if token_list.peek_idx(parser_results.consumed + 2, t.BRACE_CLOSE ) and token_list.peek_idx(parser_results.consumed + 2 + 1, t.BRACE_CLOSE ):
-                return [True,parser_results]
+            print("results",parser_results)
+            print("results",parser_results.consumed)
+
+            print_first_few(retype_tokens(token_list.t_list[parser_results.consumed +2:]))
+            #if token_list.peek_idx(parser_results.consumed , t.BRACE_CLOSE ) and token_list.peek_idx(parser_results.consumed + 2 + 1, t.BRACE_CLOSE )
+            if match_template_end(token_list.t_list[parser_results.consumed + 2:]):
+                p.print("end_found")
+                parser_results.consumed += 4
+                return parser_results
+            else:
+                p.print("NO END FOUND")
+                return False
             
         else:
-            return [False, [] ]
+            return False
 
-class StringsAndTemplates():
+
+class StringsTillTmpStart():
     def match(self,token_list):
+        p.print_c("STRING (till template)", colorama.Fore.CYAN )
+        ret = False
 
-        pass
+        consumed = 0
+        value = ""
 
-class StringsOnly():
+        for idx in range(0, len(token_list.t_list)):
+            # print(idx)
+            if not match_template_start(token_list.t_list[consumed:consumed +5]):
+                consumed+=1
+                value+= token_list.getValueAt(idx + 1)
+            else:
+                break
+
+        ret = cNode("TEXT", value, consumed)
+        return ret
+        
+
+class StringsTillTmpEnd():
     def match(self,token_list):
-        return [True, token_list]
-        pass
+        p.print_c("STRING (till template)", colorama.Fore.CYAN )
+
+        ret = False
 
 
 def parse_templates( token_list):
     print("parsing token list")
     tokens_left = len(token_list.t_list)
 
+    parsed_nodes =[]
+
     while tokens_left != 0 :
-        print(md_parser.parse_md.concerns.match_first(token_list, [
+        p.print_c("\nNEXT PARSING ROUND", colorama.Fore.YELLOW)
+        ret = md_parser.parse_md.concerns.match_first(token_list, [
             AnyTemplate(),
-            StringsAndTemplates(),
-            StringsOnly()
+            StringsTillTmpStart()
         ])
-              )
-        break
-        
 
+        p.print("tmp_parse_result:  "+str(ret))
+        if ret != False:
+            tokens_left -= ret.consumed
+            token_list= retype_tokens(token_list.t_list[ret.consumed:])
+            parsed_nodes.append(ret)
 
+        else:
+            p.print("COULD NOT PARSE TEMPLATE")
+            break
+
+        if tokens_left == 0:
+            p.print_c("SUCCESSFULL PARSE", colorama.Fore.GREEN)
+            p.print(f"Found {len(parsed_nodes)} nodes")
+            p.u()
+            for node in parsed_nodes:
+                p.print(str(node))
+            p.d()
+    return parsed_nodes

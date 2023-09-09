@@ -29,6 +29,12 @@ pjoin = os.path.join
 t = tokens.toks
 
 
+#############
+# local print settings
+############
+
+enable_tok_debug = False
+enable_post_process_debug = False
 
 ##########
 ## tokenization
@@ -38,9 +44,10 @@ class Token:
         self.type = type_
         self.value = value_
 
-        print("\nTYPE:",self.type)
-        print("VALUE:",self.value)
-        print("len:",len(self.value))
+        if enable_tok_debug:
+            print("\nTYPE:",self.type)
+            print("VALUE:",self.value)
+            print("len:",len(self.value))
 
     #create an end of file token
     @staticmethod
@@ -147,10 +154,11 @@ class TemplateParser:
             else:
                 processed.append(token)
 
-        print("\n-------------------")
-        print("DEBUG LIST OUTPUT ~")
-        for token in processed:
-            print(token.type,token.value)
+        if enable_post_process_debug:
+            print("\n-------------------")
+            print("DEBUG LIST OUTPUT ~")
+            for token in processed:
+                print(token.type,token.value)
 
         return processed
 
@@ -181,11 +189,12 @@ class TemplateParser:
             else:
                 processed.append(token)
 
-        print("\n-------------------")
-        print("DEBUG LIST OUTPUT ~")
-        #for token in processed:
-        #    print(tokt.en.name,token.value)
-
+        if enable_post_process_debug:
+            print("\n-------------------")
+            print("DEBUG LIST OUTPUT ~")
+            for token in processed:
+                print(token.name,token.value)
+        print("------------------")        
         return processed
 
 
@@ -209,21 +218,55 @@ class TemplateParser:
 
 
     def build_parse_tree(self):
-        last_idx = 0
+        # tmpl_idx= self.__base_text.find("{{", last_idx)
 
-        self.__base_text = self.__base_text.replace("\n","")
-        while last_idx != -1:
-            tmpl_idx= self.__base_text.find("{{", last_idx)
+        # if tmpl_idx != -1:
+        #     tokens_ =self.tok_template(self.__base_text[tmpl_idx:])
 
-            if tmpl_idx != -1:
-                tokens_ =self.tok_template(self.__base_text[tmpl_idx:])
+        #     grammers.parse_templates(tokens_)
 
-                grammers.parse_templates(tokens_)
-            last_idx = -1
-        pass
+        tokens_ = self.tok_template(self.__base_text)
+        nodes_  = grammers.parse_templates(tokens_)
+
+        full_text = ""
+        print("checking / parsing nodes")
+        for node in nodes_:
+            print("node type:",node.type)
+            match node.type:
+                case "TEXT":
+                    full_text+= node.value
+                    
+                case "IMPORT":
+                    print("PARSING IMPORT",node.path)
+                    #full_text+="\nIMPORT\n"
+                    full_tmp_path = os.path.join(self.__template_path, node.path)
+                    if os.path.exists(full_tmp_path):
+                        sub_parser = TemplateParser()
+
+                        sub_parser.set_template_path(self.__template_path)
+                        txt = ""
+                        with open(full_tmp_path,"r") as fi:
+                            txt=fi.read()
+                            
+                        sub_parser.set_text(txt)
+                        full_text+=sub_parser.find_and_replace_templates()
+                    else:
+                        print("TEMPLATE PATH DOES NOT EXIST")
+
+
+            # if node.type == "TEXT":
+            #     full_text+= node.value
+            # if node.type == "IMPORT":
+            #     full_text+="\nTEMPLATE\n"
+
+            #     sub_parsing =TemplateParser()
+
+        return full_text
+
 
     def find_and_replace_templates(self, text=""):
-       parse_tree = self.build_parse_tree() 
+       parse_tree = self.build_parse_tree()
+       return parse_tree
 
 
 

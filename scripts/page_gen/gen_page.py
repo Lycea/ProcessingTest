@@ -71,12 +71,12 @@ def find_and_process_templates(text):
 
 def generate_page(template_path):
     global template_base_path
+
+    print("GEN PAGE")
     template_base_path = pjoin(base_path, config["config"]["options"].get("template_location","templates"))
 
     output_path = pjoin(generatin_base_path, template_path+".html")
     temp_parser = template_parser.TemplateParser().set_template_path(template_base_path)
-    
-    
 
     with open(pjoin(template_base_path, template_path)) as template_file:
         base_text = template_file.read()
@@ -147,6 +147,8 @@ def start_generation():
             shutil.copy( pjoin(base_path, file) , pjoin(generatin_base_path, file))
 
     generate_page(config["config"]["options"].get("start_template", "default"))
+
+    exit()
 
     if config["config"]["options"].get("generate_all")or \
        config["config"]["options"].get("generate_blog_posts"):
