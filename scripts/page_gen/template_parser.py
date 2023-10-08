@@ -63,7 +63,14 @@ class Token:
     def getSize(self):
         return len(self.value)
 
+class TemplateFunctions:
+    @staticmethod
+    def repeat(x, amount):
+        return str(x) * (amount)
+        
 
+depths_max = 10
+cur_depth = 0
 
 class TemplateParser:
     def __init__(self):
@@ -211,11 +218,8 @@ class TemplateParser:
 #-------
 # parsing / lexing
 
-
-
     def parse_templates(self, tokens):
         pass
-
 
     def build_parse_tree(self):
         # tmpl_idx= self.__base_text.find("{{", last_idx)
@@ -224,9 +228,15 @@ class TemplateParser:
         #     tokens_ =self.tok_template(self.__base_text[tmpl_idx:])
 
         #     grammers.parse_templates(tokens_)
-
+        global cur_depth
         tokens_ = self.tok_template(self.__base_text)
-        nodes_  = grammers.parse_templates(tokens_)
+        results  = grammers.parse_templates(tokens_)
+
+        nodes_ = results[1]
+
+        if results[0]== False:
+            print("FAILED PARSING THE TEMPLATE")
+            return False
 
         full_text = ""
         print("checking / parsing nodes")
@@ -235,21 +245,58 @@ class TemplateParser:
             match node.type:
                 case "TEXT":
                     full_text+= node.value
-                    
+
+                case "FUNCTION":
+                    grammers.p.print("PARSING_FUNCTION")
+                    #p.print("PARSING FUNCTION")
+                    grammers.p.print(node.name)
+                    grammers.p.print(str(node.parameters))
+
+                    pure_param =[]
+                    for parameter in node.parameters:
+                        if parameter.sub_type == "VARIABLE":
+                            grammers.p.print(f"VARS: {self.__variables}")
+                            grammers.p.print(f"VAR NAME: {parameter.value}")
+                            if parameter.value in self.__variables:
+                                grammers.p.print("VARIABLE FOUND")
+                                pure_param.append(self.__variables[parameter.value])
+                            else:
+                                grammers.p.print_c(f"VARIABLE NOT FOUND: {parameter.value}", grammers.colorama.Fore.RED)
+                                return False
+                        else:
+                            parameter.value = parameter.value.replace('"',"")
+                            pure_param.append(parameter.value)
+
+                    if node.name in dir(TemplateFunctions):
+                        call = getattr(TemplateFunctions, node.name)
+                        full_text += call(*pure_param)
+
                 case "IMPORT":
                     print("PARSING IMPORT",node.path)
                     #full_text+="\nIMPORT\n"
                     full_tmp_path = os.path.join(self.__template_path, node.path)
                     if os.path.exists(full_tmp_path):
+                        if cur_depth >= depths_max:
+                            print("MAX DEPTHS REACHED ... STOPPING")
+                            return False
+
+                        cur_depth+=1
                         sub_parser = TemplateParser()
 
                         sub_parser.set_template_path(self.__template_path)
                         txt = ""
                         with open(full_tmp_path,"r") as fi:
                             txt=fi.read()
-                            
+
+                            sub_parser.set_variables(self.__variables)
                         sub_parser.set_text(txt)
-                        full_text+=sub_parser.find_and_replace_templates()
+                        result = sub_parser.find_and_replace_templates()
+                        
+                        if result == False:
+                            print("ERROR WHILE PARSING SUBPAGE: "+node.path)
+                            return False
+                        else:
+                            full_text+=result
                     else:
                         print("TEMPLATE PATH DOES NOT EXIST")
 
@@ -260,7 +307,7 @@ class TemplateParser:
             #     full_text+="\nTEMPLATE\n"
 
             #     sub_parsing =TemplateParser()
-
+        #exit()
         return full_text
 
 

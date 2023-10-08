@@ -52,3 +52,11 @@ class cVariable(cNode):
         self.name = name
         self.type = "VARIABLE"
         self.var_type = "GET"
+
+
+class cParameter(cNode):
+    def __init__(self,sub_type_,value_,consumed_) :
+        self.type = "PARAMETER"
+        self.consumed = consumed_
+        self.value = value_
+        self.sub_type = sub_type_

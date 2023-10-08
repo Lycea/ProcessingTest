@@ -71,8 +71,19 @@ def find_and_process_templates(text):
 
 def generate_page(template_path):
     global template_base_path
-
     print("GEN PAGE")
+    print("---------")
+    print("  PAGE: ",template_path)
+    variables = {}
+    if template_path[-1]== "/":
+        template_path=template_path[:-1]
+
+    variables["page_title"] = os.path.basename( template_path.replace(".html", "") )
+    variables["page_depth"] = len(template_path.split("/"))-1
+
+    print("  TITLE: ",variables["page_title"])
+    print("  DEPTH: ",variables["page_depth"])
+    
     template_base_path = pjoin(base_path, config["config"]["options"].get("template_location","templates"))
 
     output_path = pjoin(generatin_base_path, template_path+".html")
@@ -81,13 +92,19 @@ def generate_page(template_path):
     with open(pjoin(template_base_path, template_path)) as template_file:
         base_text = template_file.read()
         print(base_text)
-
+        temp_parser.set_variables(variables)
         temp_parser.set_text(base_text)
+
         #output_text = find_and_process_templates(base_text)
         output_text = temp_parser.find_and_replace_templates(base_text)
         print("---------------------")
         print(output_text)
-        
+
+
+        if output_text == False:
+            print("ERROR WHILE PARSING TEMPLATE FILE:", pjoin(template_base_path, template_path))
+            return False
+
         with open(output_path, "w") as out_file:
             out_file.write(output_text)
 
