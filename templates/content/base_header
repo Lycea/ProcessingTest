@@ -6,7 +6,7 @@
 
     <nav>
       <ul class="navi">
-      <li class = "navi"><a href="index.html">home</a></li>
+      <li class = "navi"><a href="index.html">Home</a></li>
       <li class = "navi"><a href="index.html">Blog</a></li>
       <li class = "navi"><a href="sketches/sketch_list.html">Sketches</a></li>
       <li class = "navi"><a href="index.html">Recent added</a></li>

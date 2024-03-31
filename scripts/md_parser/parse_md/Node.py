@@ -3,7 +3,7 @@ class cNode():
         self.type = type_
         self.value= value_
         self.consumed = consumed
-        
+    
     @staticmethod
     def null():
         return False

@@ -44,18 +44,18 @@ def parse_md(raw_md_text):
 
 
 
+if __name__ == "_main_":
 
+    f=open("test_file.md","r")
+    g=open("test_file.html","w")
+    g.write(parse_md(f.read()))
 
-f=open("test_file.md","r")
-g=open("test_file.html","w")
-g.write(parse_md(f.read()))
+    f.close()
+    g.close()
+    #parse_md(test_text)
 
-f.close()
-g.close()
-#parse_md(test_text)
-
-#for sample in samples:
-#    parse_md(sample)
+    #for sample in samples:
+    #    parse_md(sample)
 
 
 

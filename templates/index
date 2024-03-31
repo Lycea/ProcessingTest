@@ -9,9 +9,8 @@
     <!--<meta http-equiv="refresh" content="5"> -->
     <link rel="stylesheet" href="style.css"/>
   </head>
-<body>
-{{TEMPLATE:content/base_header}}
-
+  <body>
+  {{TEMPLATE:  content/base_header_with_vars}}
 
   <div class="main">
     {{TEMPLATE:content/main_content}}
