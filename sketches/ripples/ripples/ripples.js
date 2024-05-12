@@ -9,7 +9,7 @@ function setup()
 
 function draw()
 {
-	SketchSettings.prepate()
+	SketchSettings.prepare()
     background(0);   
 
 }
