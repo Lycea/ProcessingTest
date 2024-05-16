@@ -7,8 +7,8 @@ let y_mod = 0.05
 let z = 0
 let z_inc = 0.00//0.01
 
-let rec_x_size = 20
-let rec_y_size = 20
+let rec_x_size = 5
+let rec_y_size = 5
 
 let x_rects = 800/rec_x_size
 let y_rects = 600/rec_y_size
@@ -20,7 +20,7 @@ let point_list =[]
 
 var grid_list =[]
 
-var ttl_base = 999
+var ttl_base = 999999
 
 class cListVec
 {
@@ -126,9 +126,11 @@ class cPoint
 			
 		}
 
-		var x = floor(this.pos.x/rec_x_size)
-		var y = floor(this.pos.y/rec_y_size)
+		var x = min(floor(this.pos.x/rec_x_size),x_rects-1)
+		var y = min(floor(this.pos.y/rec_y_size),y_rects-1)
 		
+		//console.log(y,x)
+
 		grid_list[y][x].update_val()
 		
 
@@ -154,7 +156,9 @@ class cPoint
 
 function setup() 
 {
-	createCanvas(1920,1080);
+	//createCanvas(1920,1080);
+	createCanvas(SketchSettings.width,SketchSettings.height);
+	console.log(SketchSettings.width,SketchSettings.height)
 	colorMode(HSL,360,100,100);
 
 	
@@ -162,8 +166,11 @@ function setup()
 	x_rects = floor(width/rec_x_size)
 	y_rects = floor(height/rec_y_size)
 
+	console.log(y_rects,x_rects)
 
 	init_grid()
+	console.log(grid_list)
+	console.log("size" ,width,height)
 
 	point_list =[]
 	for(var i=0;i<3000;i++)
@@ -192,7 +199,7 @@ function draw_mouse()
 
 function draw()
 {	
-	
+	SketchSettings.prepare()
 
 	z+=z_inc
 
