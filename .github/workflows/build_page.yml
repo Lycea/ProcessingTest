@@ -1,4 +1,4 @@
-name: Deploy Python project to Azure Function App
+name: Build + Deploy my own page with own generator
 
 on:
   push:
@@ -30,3 +30,15 @@ jobs:
       shell: bash
       run: |
        python scripts/page_gen/gen_page.py 
+
+    - name: 'Setup Pages'
+      uses: actions/configure-pages@v5
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        # Upload entire repository
+        path: './generated/'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
