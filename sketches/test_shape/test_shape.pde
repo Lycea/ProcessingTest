@@ -1,9 +1,18 @@
 var base_col =0
 var z_off =0
 var size = 0
+
 function setup() 
 {
-	createCanvas(400,400);
+
+	if(SketchSettings.display == true)
+	{
+		createCanvas(SketchSettings.width,SketchSettings.height);
+	}
+	else
+	{
+		createCanvas(400,400);
+	}
 	colorMode(HSL,360,100,100);
 	base_col =random(0,250)
 	size = random(5,20)

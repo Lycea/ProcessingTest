@@ -82,7 +82,7 @@ class Pix
 	{	
 		if(this.state == 1)
 		{
-			fill(0+this.last_allive*30+this.live*10,100,50)
+			fill(0+this.last_allive*30+this.live*10,100,30)
 			rect(this.x*cell_size, this.y*cell_size,cell_size,cell_size)
 		}
 	}

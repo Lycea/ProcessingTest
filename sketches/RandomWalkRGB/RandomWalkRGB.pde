@@ -10,6 +10,11 @@ var blueStatic = 0
 var greenStatuc = 0
 
 
+
+var alpha__ = 0
+
+
+
 function new_point()
 {
 	var tmp =[]
@@ -26,7 +31,17 @@ function new_point()
 
 function setup() 
 {
-	createCanvas(1920,1080);
+	if (SketchSettings.display == true)
+	{
+		alpha__ = 20
+	}
+	else
+	{
+		alpha__ = 255
+	}
+
+
+	createCanvas(SketchSettings.width,SketchSettings.height);
 	colorMode(RGB,255,255,255);
 	for(var i = 0;i<height;i++)
 	{
@@ -67,6 +82,10 @@ function dist1d(x,y)
 
 var last_process=0
 var once = false
+
+
+
+
 function draw()
 {
 	
@@ -80,8 +99,8 @@ function draw()
 		random_idx = floor(random(0,len_array-1))
 		var point_ = array_points[random_idx]
 
-		stroke(point_.h,point_.s,point_.l)
-		fill(point_.h,point_.s,point_.l)
+		stroke(point_.h,point_.s,point_.l,alpha__)
+		fill(point_.h,point_.s,point_.l,alpha__)
 		
 
 		//point(300,300)
