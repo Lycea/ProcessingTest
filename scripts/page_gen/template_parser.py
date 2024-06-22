@@ -1,7 +1,7 @@
 import re
 import os
 import sys
-import imp
+#import imp
 
 
 # Get the path of the directory containing the current script
