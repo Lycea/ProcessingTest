@@ -1,8 +1,9 @@
 import os
 import sys
+import yaml
 
-
-
+def get_config(path):
+    pass
 
 def create_page_tree(tree,path_base, depth=0, base=""):
     if depth == 0:
@@ -32,6 +33,19 @@ def create_page_tree(tree,path_base, depth=0, base=""):
                 for k in tree:
                     print("  ",(depth*3*" "),k,tree[k])
 
+                tree["settings"]={}
+                info_path = os.path.join(path_base,"info.yaml")
+
+                try:
+                    with open(info_path,"r") as config_file:
+                        yaml_conf = yaml.load(config_file.read(),Loader = yaml.Loader)
+                        # print("--")
+                        # print(yaml_conf)
+                        tree["settings"]= yaml_conf["settings"]
+                        # print(tree)
+                        # exit()
+                except Exception as e:
+                    pass
 
     if not found_dirs:
         tree["has_child"]=False
@@ -58,21 +72,23 @@ def process_page_tree(tree,txt,depth=0,is_child=False):
                     txt+=depth*"  "+"</div>\n"
             elif tree[key]["has_child"]and tree[key]["is_sketch"]:
                 pass
-            elif not tree[key]["has_child"]and tree[key]["is_sketch"] and tree[key]["path"][-4:]=="html" :
-                if is_child:
-                    #txt+=depth*"  "
-                    #txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a></br>'
-                    #txt+="\n"
+            elif not tree[key]["has_child"]and tree[key]["is_sketch"] and tree[key]["path"].endswith("html") :
+                txt+=depth*"  "+'<div class="sketch_item">'
+                #txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
 
-                    txt+=depth*"  "+'<div class="sketch_item">'
-                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
-                    txt+="</div>\n"
-
-                else:
-                    txt+=depth*"  "+'<div class="sketch_item">'
-                    txt+='<a class="norm" href="'+tree[key]["path"]+'" >'+tree[key]["name"]+'</a>'
-                    txt+="</div>\n"
-    
+                txt+=f'<div class="norm"> \
+                       <table> \
+                         <tr> \
+                           <td width=200> {tree[key].get("name")} </td>\
+                           <td> <a href="{tree[key]["path"]}">link </a> </td>'
+                if tree[key]["settings"].get("display_mode",False) == True:
+                    disp_param="?display"
+                    txt+= f'<td> | <a href="{tree[key]["path"]}{disp_param}">display </a> </td>'
+                txt+='         </tr> \
+                       </table> \
+                      </div>'
+                txt+="</div>\n"
+                    
     print(txt)
     return txt
 
