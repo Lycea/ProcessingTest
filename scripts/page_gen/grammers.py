@@ -205,6 +205,7 @@ def get_function_parts(tokens):
     param_list = []
 
     next_allowed={
+        t.FUNCT_OPEN: [t.STRING_START_END,t.STRING,t.FUNCT_CLOSE],
         t.COMMA: [t.STRING_START_END,t.STRING],
         t.STRING: [t.COMMA, t.FUNCT_CLOSE],
         t.STRING_START_END: [t.COMMA, t.FUNCT_CLOSE]
@@ -214,7 +215,7 @@ def get_function_parts(tokens):
 
     continue_parsing = True
     valid = True
-    prev_type = t.COMMA
+    prev_type = t.FUNCT_OPEN
     
 
     while continue_parsing :
@@ -341,8 +342,10 @@ class VariableTemplate():
             )
             if res[0]:
                 print("IS A FUNCTION PROBABLY!")
+
                 parts = get_function_parts(token_list.t_list[2:])
                 print("PARTS",parts)
+
                 if parts[0]:
                     ret = nodes.cFunction()
                     ret.parameters = parts[1]

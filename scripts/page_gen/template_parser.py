@@ -62,11 +62,16 @@ class Token:
 
     def getSize(self):
         return len(self.value)
+import datetime
 
 class TemplateFunctions:
     @staticmethod
     def repeat(x, amount):
         return str(x) * (amount)
+
+    @staticmethod
+    def gen_time():
+        return datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
         
 
 depths_max = 10
