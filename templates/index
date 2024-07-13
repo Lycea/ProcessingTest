@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
-  {{TEMPLATE:  content/base_header_with_vars}}
+  {{TEMPLATE:  content/base_header_with_vars.html}}
 
   <div class="main">
-    {{TEMPLATE:content/main_content}}
-    {{TEMPLATE:content/base_side}}
+    {{TEMPLATE:content/main_content.html}}
+    {{TEMPLATE:content/base_side.html}}
   </div>
-  {{TEMPLATE:content/base_footer}}
+  {{TEMPLATE:content/base_footer.html}}
  </body>
 </html>

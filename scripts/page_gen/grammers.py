@@ -80,7 +80,8 @@ class PathPart():
 
         next_possible ={
             t.SLASH : [ t.STRING ],
-            t.STRING: [ t.SLASH, t.SPACE, t.BRACE_CLOSE ]
+            t.STRING: [ t.SLASH, t.SPACE, t.BRACE_CLOSE ,t.POINT ],
+            t.POINT: [t.STRING]
         }
 
         cur_type = t.SLASH
@@ -117,7 +118,7 @@ class ImportTemplate():
         pass
 
     def match(self,token_list):
-        p.u().print("Import")
+        p.u().print("checking Import...")
         ret = cNode.null()
 
         token_list = retype_tokens(token_list)
@@ -127,9 +128,9 @@ class ImportTemplate():
                 [t.SPACE, t.STRING, t.COLON],
                 [t.STRING,t.COLON],
             ])
-
+        print(res)
         if res[0] == True:
-            p.u().print("REAL")
+            p.u().print("check REAL template...")
 
             p.print(token_list.getValueAt(1))
             p.print(token_list.getValueAt(2))
@@ -137,12 +138,17 @@ class ImportTemplate():
             if res[1] == 2:
                 p.print(str(2))
                 if token_list.getValueAt(1) == "TEMPLATE":
-                    p.u().print("IMPORT FOUND")
+                    p.u().print("IMPORT FOUND (multidepth,path)")
                     p.d()
 
                     matched = md_parser.parse_md.concerns.match_plus( token_list.t_list[2:] ,PathPart())
 
                     print("match",matched)
+
+                    if matched == False:
+                        print("Error while parsing template path, please check !")
+                        exit()
+
                     print(matched[0][0])
                     #ret = cNode("ImportTemplate","",res[1]+matched[1] )
 
@@ -151,7 +157,7 @@ class ImportTemplate():
             else:
                 p.print(str(res[1]))
                 if token_list.getValueAt(2)=="TEMPLATE":
-                    p.u().print("IMPORT FOUND")
+                    p.u().print("IMPORT FOUND (single path)")
                     p.d()
                     
                     ret = cNode("ImportTemplate","",res[1])
