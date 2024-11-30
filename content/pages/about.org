@@ -1,0 +1,23 @@
+#+include: ../org-tmp/page-pre.org
+
+This page is work in progress
+So please don't expect to much for now
+
+And about me I'm an engineer trying to build up this page and fill it with
+interesting pages about what I have found out while programming or using
+sofware.
+
+Here are some of the examples what it could be about !
+- Programming
+  - Love2d / lua
+  - Processing / p5js
+  - Python
+  - rust
+  - list / emacs
+- Projets
+- Tutorials
+- Digital art ?
+
+and whatever I feel like discussing about or sharing my new won insight !
+
+#+include: ../org-tmp/page-post.org

@@ -6,7 +6,7 @@ import re
 
 from bs4 import BeautifulSoup as bs
 
-pure_dir = "pure_posts"
+pure_dir = ".org_gen/pure_posts"
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
     with open(sys.argv[1]) as base_file:
         base_txt = base_file.read()
 
-        soup = bs(base_txt, features="lxml")                #make BeautifulSoup
+        soup = bs(base_txt, "html.parser")                #make BeautifulSoup
         base_txt = soup.prettify()   #prettify the html
 
     pre_body  = re.search("(.*<body>).*", base_txt,re.DOTALL)

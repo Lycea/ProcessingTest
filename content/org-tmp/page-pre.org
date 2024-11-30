@@ -1,0 +1,11 @@
+#+begin_export html
+  {{TEMPLATE:  content/base_header_with_vars.html}}
+
+
+  <main class="container">
+    <div class="row g-5">
+      <div class="col-md-8">
+
+<article class="blog-post">
+#+end_export
+

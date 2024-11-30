@@ -1,7 +1,8 @@
 config: 
   direct_copy_files:
+    - blog.css
     - style.css
-    - blog_main.html
+    - old_style.css
   direct_copy_folders:
     -  sketches
     -  libs
@@ -10,7 +11,17 @@ config:
     generate_all: true
     generate_sketchlist: false
     generate_blog_posts: false
+    generate_pages: true
     output_path: "generated"
-    template_location: "templates"
-    start_template: "index"
-    post_directory: "content/posts"
+    template_directories: "templates"
+    output_flatten_paths:
+      - "content/pages/"
+      - "content/.org_gen/pages/"
+    page_directories:
+      - "content/pages"
+      - "content/.org_gen/pages"
+    post_directories:
+      - "content/.org_gen"
+    ignore_pages:
+      - ".org"
+      - ".#"

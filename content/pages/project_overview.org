@@ -1,0 +1,7 @@
+
+#+include: ../org-tmp/page-pre.org
+
+Here will be some links to projekts of mine which are available in the web
+# test
+
+#+include: ../org-tmp/page-post.org

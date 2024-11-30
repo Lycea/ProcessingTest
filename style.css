@@ -1,133 +1,73 @@
+/* myvars*/
+:root {
+    /* main colors*/
+    --my-color-darker: #331D2C;
+    --my-color-dark: #3F2E3E;
 
-/*content class*/
+    --my-color-grey: #594056;
 
-header {
-    background-color: #666;
+    --my-color-light:#A78295;
+    --my-color-lighter: #e3cdb5;
+    --my-color-lightest:#EFE1D1;
+
+    /* font colors */
+    --my-font-color-light: #fff;
+    --my-font-color-normal: #000;
+}
+
+
+.org-src-container {
+    background-color: var(--my-color-light);
+    border-left-width: 5px;
+    border-left-color: var(--my-color-grey);
+    border-left-style: solid;
+    margin-left: 20px;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+
+
+.my-header {
+    background-color: var(--my-color-dark);
+    color: var(--my-font-color-light);
     padding: 30px;
-    text-align: center;
-    font-size: 35px;
-    color: white;
 }
 
-section{
-    padding-left: 30px;
-    padding-top: 30px;
+.my-navbar {
+    background-color: var(--my-color-darker);
+    padding: 5px 5px;
 }
 
-
-.sidebar{
-    float:left;
-    width:25%;
-    height:99%;
-    background: #fffbf2;
+.my-navbar-item {
+    width: 25%;
+    color: var(--my-font-color-light);
 }
 
-.titlePane{
-    padding: 10px;
-    text-align: center;
-    background-color: #bebec0;
-    font-size:25px;
-    color:#fcfcfc;
+.my-navbar-active {
+    background-color: var(--my-color-grey);
 }
 
-.content{
-    float:left;
-    width:75%;
-    background-color:#fffdf9;
+.my-footer {
+    background-color: var(--my-color-dark);
+    color: var(--my-font-color-light);
 }
 
-.main_page{
-    background-color: #c1c1c1;
+.my-sidebar {
+    background-color: var(--my-color-lighter);
 }
 
+/* ****************************/
+/* hard settings for p5 pages */
 
-.footer{
-    padding: 20px;
-    text-align: center;
-    background: #ddd;
-    margin-top: 20px;
+
+html, body {
+    border: 0px; 
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--my-color-lightest);
 }
-
-.main::after{
-    content: "";
-    display: table;
-    clear: both;
-}
-nav
-{
-    
-    background-color: #c8c8c8;
-    font-size: 20px;
-}
-
-
-ul.navi
-{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
-
-li.navi{
-    float: left;
-}
-
-li a{
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li.norm{
-    color:black;
-    text-align: left;
-}
-
-  
-  /* selected link */
-  a.norm {
-    color: black;
-    text-decoration: none;
-    
-  } 
-
-div.sketch_item{
-//    background-color: #eee9a8;
-    padding: 18px;
-    width: 100%;
-    color : black;
-    border-bottom-style: solid;
-    border-bottom-color: lightgray;
-    border-bottom-width: 1px;
-    margin-bottom: 10px;
-
-/*
-    background: 
-                radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 3px, transparent 3px) 100% 0%/8px 8px no-repeat,
-                radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 3px, transparent 3px) 0% 100%/8px 8px no-repeat,
-                radial-gradient(circle at 0 0, #ffffff 0, #ffffff 3px, transparent 3px) 100% 100%/8px 8px no-repeat,
-                linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 10px) calc(100% - 16px) no-repeat,
-                linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 16px) calc(100% - 10px) no-repeat,
-                linear-gradient(147deg, transparent 25%, #48abe0 25%, #48abe0 50%, transparent 50%, transparent 75%, #48abe0 75%)
-*/
-}
-
-div.sketch_item:after{
-    //background-color: #eee9a8;
-    padding: 18px;
-    width: 10%;
-    color : black;
-    bottom: -5px;
-    border-bottom-style: solid;
-    border-bottom-color: lightgray;
-    border-bottom-width: 1px;
-    margin-bottom: 10px;                   
-}
-
 
 /* canvas p5 adjusts  */
 canvas {
@@ -135,10 +75,4 @@ canvas {
     position: absolute;
     left: 0;
     top: 0;
-}
-
-html, body {
-    border: 0px; 
-    margin: 0px;
-    padding: 0px;
 }

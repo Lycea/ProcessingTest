@@ -1,0 +1,52 @@
+#+DATE:<2024-11-21 Thu> 
+#+NAME: How to deploy lua(love2d) to a webpage
+
+* How to deploy lua(love2d) to a webpage
+
+If you are using the love2d framework to develope prototypes or gamejam entrys
+or even whole games, you may have been thinking it is only possible to deploy
+your project via a .love file to normal os or to android , because there
+are good explanations available for these variations.
+
+Some weeks ago at the end of a gamejam I pondered about the same thought that
+it is sad that I could not live deploy my game to itch.io or a own page
+for testing it out and making it available to others for easy testing without the "need"
+to install other dependencies or even downloading a file.  At this point I did my own research
+and after some searching I stumbled upon a small project called [[https://github.com/Davidobot/love.js][love.js]]   which specifically
+aids to help with this issue.
+
+Also installing it is ( if you have yourselve node and npm instsalled ) as trivial as
+#+begin_src bash
+npm i love.js
+#+end_src
+
+As soon as you got your love.js installed you can move into one of your projects you want to deploy
+and you are ready to convert your project to a web deployable game.
+What you want to do to do now to deploy your game is first zip it like usually with something like
+#+begin_src bash
+zip -9 -r <Game-Title>.love .
+#+end_src
+
+And after you have done this step execute the following
+#+begin_src bash
+npx love.js <Game-Title>.love <output-folder> -c --title <your-game-name>
+#+end_src
+
+Which will create a webassemly version of your game which you can now run in your browser !
+For a simple example of how to test it move into your deployed folder and startup a simple python server
+with:
+#+begin_src bash
+python -m http.server 8000
+#+end_src
+
+Now you can open a webbrowser of your liking and you will see a page with the love2d logo and background colors
+plus your game will be starting up if everything went right.
+There is an occasional problem or some features are maybe not yet completely supported, I have not yet experimented
+enough with verry complex projects to run into more problems then some browser specific ones that they can not access the lokal page
+or that the game is not resizing probably, but the second one was also a issue with the game itself.
+
+Also if you have wonderd if it is possible to replace the background of the page or the css.
+This is quite simple since the base structure of the page is trivial to use and simply replace the parts you want to replace
+with your own. So go and change your theming as you desire and have fun deploying your own games or programms.
+
+.

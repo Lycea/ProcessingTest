@@ -107,6 +107,8 @@ venv.bak/
 
 .vscode
 
+content/.org_gen
+content/.packages
 generated
 .#*
 *~

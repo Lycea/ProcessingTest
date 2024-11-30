@@ -1,2 +1,3 @@
-browser-sync --server --files . --index generated/index.html
+cd generated
+browser-sync --server --files .  --index index.html
 #browser-sync --server --files . --index index.html
