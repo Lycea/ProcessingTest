@@ -65,7 +65,7 @@ def retype_tokens(tokens):
 
 
 def print_first_few(li):
-    for idx in range(0,5):
+    for idx in range(0,min(5,li.count())):
         p.print(f"{idx}: {li.t_list[idx].type} {li.t_list[idx].value}  ")
 
 

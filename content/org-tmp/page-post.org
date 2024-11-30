@@ -1,0 +1,11 @@
+#+begin_export html
+</article>
+      </div>
+      {{TEMPLATE:content/base_side.html}}
+    </div>
+  </main>
+  {{TEMPLATE:content/base_footer.html}}
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+#+end_export

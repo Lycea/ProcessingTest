@@ -1,5 +1,10 @@
 #+DATE:<2023-05-28 Sun> 
 #+NAME: How to embed p5js in another page
+#+TAGS: Something, ahhhh, beeee
+#+TAGS: reeee
+#+MACRO: export_ (eval (write-region (concat "something something" $1 ) nil "./text.txt"))
+
+** {{{keyword(NAME)}}}
 
 P5.js is a small js library which wraps around
 the canvas and is easily used to create a simple

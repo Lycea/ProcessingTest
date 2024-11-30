@@ -163,15 +163,21 @@ class TemplateParser:
 
                 proc_string = ""
                 processed.append(token)
-            else:
+            else:#no string happens so just add it back into the list
                 processed.append(token)
+        
+        if is_processing:
+            print("finishing up last string....")
+            processed.append(Token("STRING", proc_string))
+
+
 
         if enable_post_process_debug:
             print("\n-------------------")
             print("DEBUG LIST OUTPUT ~")
             for token in processed:
                 print(token.type,token.value)
-
+                
         return processed
 
 
@@ -205,18 +211,19 @@ class TemplateParser:
             print("\n-------------------")
             print("DEBUG LIST OUTPUT ~")
             for token in processed:
-                print(token.name,token.value)
+                print(token.type,token.value)
         print("------------------")        
         return processed
 
 
 
     def tok_template(self, txt):
+        print(txt)
         tokenized = TokenList.cTokenList()
 
         for char in txt :
             tokenized.add(Token(tokens.tok_alias.get(char,tokens.tok_alias["default"])  ,char) )
-
+        print("pre tokens:",tokenized.count())
         tokenized.t_list = self.preproc_spaces(self.preproc_strings(tokenized.t_list))
         
         return tokenized
@@ -235,12 +242,13 @@ class TemplateParser:
         #     grammers.parse_templates(tokens_)
         global cur_depth
         tokens_ = self.tok_template(self.__base_text)
+        print("tokens found: ",tokens_.count())
         results  = grammers.parse_templates(tokens_)
 
         nodes_ = results[1]
 
         if results[0]== False:
-            print("FAILED PARSING THE TEMPLATE")
+            print("FAILED PARSING THE TEMPLATE, intern")
             return False
 
         full_text = ""
@@ -296,6 +304,7 @@ class TemplateParser:
                             sub_parser.set_variables(self.__variables)
                         sub_parser.set_text(txt)
                         result = sub_parser.find_and_replace_templates()
+                        cur_depth-=1
                         
                         if result == False:
                             print("ERROR WHILE PARSING SUBPAGE: "+node.path)

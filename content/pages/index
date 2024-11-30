@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+   {{TEMPLATE: content/standard_head.html}} 
+</head>
+
+<body>
+  {{TEMPLATE:  content/base_header_with_vars.html}}
+
+
+  <main class="container">
+    <div class="row g-5">
+
+      {{TEMPLATE:content/main_content.html}}
+      {{TEMPLATE:content/base_side.html}}
+    </div>
+  </main>
+  {{TEMPLATE:content/base_footer.html}}
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+ </body>
+</html>

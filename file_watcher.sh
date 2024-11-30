@@ -16,15 +16,35 @@ function execute() {
 }
 
 
+# inotifywait --recursive --monitor --format "%e %w%f" \
+#             --event modify \
+#             --exclude .git/ \
+#             --exclude .venv/ \
+#             --exclude content/ \
+#             --exclude content/.org_gen \
+#             --exclude generated/ \
+#             ./ \
+#     | while read changed; do
+#     echo $changed
+#     execute "$@"
+# done &
+
+echo "Setup content watch"
 inotifywait --recursive --monitor --format "%e %w%f" \
             --event modify \
-            --exclude .git/ \
-            --exclude .venv/ \
-            --exclude content/ \
-            --exclude generated/ \
-            ./ \
+            --exclude content/.org_gen \
+            content \
     | while read changed; do
     echo $changed
     execute "$@"
-done
+done &
+
+echo "Setup template watch"
+inotifywait --recursive --monitor --format "%e %w%f" \
+            --event modify \
+            templates \
+    | while read changed; do
+    echo $changed
+    execute "$@"
+done 
 
