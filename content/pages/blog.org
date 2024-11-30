@@ -3,19 +3,19 @@
 Here you can find an overview of written blog articles .
 
 ** Latest
-123
+# 123
 ** Featured
-123
+# 123
 ** By Tag
-123
-** whut
-something something ... why does it not do
+# 123
+# ** whut
+# something something ... why does it not do
 
 
-#+begin_src bash
-  echo "this is a test code block"
-  cd somewhere/deep
-  mkdir mydir
-  do_something
-#+end_src
+# #+begin_src bash
+#  echo "this is a test code block"
+#  cd somewhere/deep
+#  mkdir mydir
+#  do_something
+# #+end_src
 #+include: ../org-tmp/page-post.org
