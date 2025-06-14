@@ -26,6 +26,20 @@ class cTokenList():
             #print("list is empty")
             return False
 
+    #iterate the list of tokens untill we found the wanted type_
+    def get_untill(self,type_):
+        counter_ = 0
+        found_ = False
+        for item in self.t_list:
+            if item.type == type_:
+                found_ = True
+                break
+            counter_+=1
+        
+        return [found_,counter_]
+
+
+
     #expects a list and a list in the list
     #checks if one of the cases fits the strings in the list
     # [[TYPE1,TYPE2,TYPE3,TYPE4],[TYPE1,TYPE2,TYPE4]]

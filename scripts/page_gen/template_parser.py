@@ -29,6 +29,24 @@ pjoin = os.path.join
 t = tokens.toks
 
 
+############
+# helper functions
+############
+
+def get_variable_type( variable : str):
+
+    if variable.isnumeric():
+        return "NUMBER"
+    if variable.strip().startswith('"') and variable.strip().endswith('"'):
+        return "STRING"
+
+    if variable.isascii():
+        return "VARIABLE"
+
+    return "UNKNOWN"
+
+
+
 #############
 # local print settings
 ############
@@ -87,6 +105,30 @@ class TemplateParser:
     def set_text(self, txt):
         self.__base_text = txt
         return self
+
+    def check_variable(self, variable, other_type):
+        var_table ={
+            type(int) : ""
+        }
+
+        var_value = self.get_variable(variable)
+
+        if var_value == False:
+            return False
+
+
+    def print_variables(self):
+        for variable in self.__variables:
+            print(f"{variable} {self.__variables[variable]}")
+
+    def get_variable(self,variable_name):
+        if variable_name in self.__variables:
+            print("VARIABLE FOUND")
+            return self.__variables[variable_name]
+        else:
+            print(f"VARIABLE NOT FOUND: {variable_name}", grammers.colorama.Fore.RED)
+            return False
+
 
     def set_template_path(self, template_path):
         self.__template_path = template_path
@@ -315,20 +357,81 @@ class TemplateParser:
                         print("TEMPLATE PATH DOES NOT EXIST")
 
 
+                case "CONDITION":
+
+
+                    print("_________")
+                    print("CONDITION")
+                    print("---------")
+                    print(node)
+
+                    left_side = node.condition_parts[0]
+                    condition = node.condition_parts[1].strip()
+                    right_side = node.condition_parts[2]
+
+                    left_side_type = get_variable_type(left_side)
+                    right_side_type = get_variable_type(right_side)
+
+                    print("TYPES")
+                    print(left_side_type,right_side_type)
+
+                    self.print_variables()
+                    left_adjusted = self.convert_type(left_side, left_side_type)
+                    right_adjusted = self.convert_type(right_side, right_side_type)
+
+                    print(left_adjusted,right_adjusted)
+
+                    node.show()
+
+                    if left_adjusted == False  or right_adjusted == False:
+                        print("Variables could not be converted")
+                        return False
+
+                    if type(left_adjusted) != type(right_adjusted):
+                        print(f"Variable type missmatch in condition: {type(left_adjusted)} ; {type(right_adjusted)}")
+                        return False
+
+                    if condition not in [">=","<=","=="]:
+                        print(f"Condition type: {condition} is not supported")
+                        return False
+
+                    if condition == "==":
+                        print("SAME SAME")
+                        if left_adjusted == right_adjusted :
+                            print("TRUE CONDITION")
+                            for token in node.true_parts:
+                                full_text+= token.value
+                                print("val: "+token.value)
+                    else:
+                        pass
+
             # if node.type == "TEXT":
             #     full_text+= node.value
             # if node.type == "IMPORT":
             #     full_text+="\nTEMPLATE\n"
 
             #     sub_parsing =TemplateParser()
-        #exit()
+        
         return full_text
+
+
+    def convert_type(self,variable,type_to_convert):
+        if type_to_convert == "STRING":
+            return variable.strip()[1:-1]
+
+        if type_to_convert == "NUMBER":
+            return  int(variable)
+
+        if type_to_convert == "VARIABLE":
+            return self.get_variable(variable)
+
+        if type_to_convert == "UNKNOWN":
+            return False
 
 
     def find_and_replace_templates(self, text=""):
        parse_tree = self.build_parse_tree()
        return parse_tree
-
 
 
     def set_variables(self, variables):

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "types": [
+            "p5"
+        ]
+    },
+
+    "include": [
+        "libs/**/*.js",
+    ]
+}

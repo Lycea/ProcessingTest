@@ -10,8 +10,13 @@
 
   <main class="container">
     <div class="row g-5">
-
+test
       {{TEMPLATE:content/main_content.html}}
+
+      {{IF: page_name == "index" == whee THEN {
+      "HIIII"
+      } }}
+
       {{TEMPLATE:content/base_side.html}}
     </div>
   </main>
@@ -20,3 +25,5 @@
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
  </body>
 </html>
+
+

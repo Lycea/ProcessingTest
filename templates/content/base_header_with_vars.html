@@ -3,10 +3,10 @@
 </header>
 <div class=" nav-scroller py-1 mb-3 border-bottom my-navbar">
     <nav class="nav justify-content-between">
-        <a class="nav-item nav-link my-navbar-item my-navbar-active" href="index.html">Home</a>
-        <a class="nav-item nav-link my-navbar-item" href="blog.html">Blog</a>
-        <a class="nav-item nav-link my-navbar-item" href="project_overview.html">Projects</a>
-        <a class="nav-item nav-link my-navbar-item" href="sketches/sketch_list.html">Sketches</a>
-        <a class="nav-item nav-link my-navbar-item" href="about.html">About</a>
+        <a class="nav-item nav-link my-navbar-item {{IF: page_title == "index" THEN { my-navbar-active }}}" href="index.html">Home</a>
+        <a class="nav-item nav-link my-navbar-item {{IF: page_title == "blog" THEN { my-navbar-active }}} " href="blog.html">Blog</a>
+        <a class="nav-item nav-link my-navbar-item {{IF: page_title == "project_overview" THEN { my-navbar-active }}} " href="project_overview.html">Projects</a>
+        <a class="nav-item nav-link my-navbar-item {{IF: page_title == "sketch_list" THEN { my-navbar-active }}} " href="sketches/sketch_list.html">Sketches</a>
+        <a class="nav-item nav-link my-navbar-item {{IF: page_title == "about" THEN { my-navbar-active }}}" href="about.html">About</a>
     </nav>
 </div>

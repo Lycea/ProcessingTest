@@ -25,3 +25,4 @@ config:
     ignore_pages:
       - ".org"
       - ".#"
+      - ".ign"

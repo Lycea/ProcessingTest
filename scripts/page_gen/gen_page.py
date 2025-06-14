@@ -1,3 +1,4 @@
+
 import yaml
 import shutil
 import os
@@ -7,6 +8,9 @@ import colorama
 import check_yaml
 import template_parser
 
+import log_helper
+
+logger = log_helper.p
 
 pjoin = os.path.join
 
@@ -71,9 +75,9 @@ def find_and_process_templates(text):
 
 def generate_page(template_path):
     global template_base_path
-    print("GEN PAGE")
-    print("---------")
-    print("  PAGE: ",template_path)
+    logger.print("GEN PAGE")
+    logger.print("---------")
+    logger.print(f"  PAGE: {template_path}")
     variables = {}
     output_path=""
 
@@ -83,8 +87,8 @@ def generate_page(template_path):
     variables["page_title"] = os.path.basename( template_path.replace(".html", "") )
     variables["page_depth"] = len(template_path.split("/"))-1
 
-    print("  TITLE: ",variables["page_title"])
-    print("  DEPTH: ",variables["page_depth"])
+    logger.print("  TITLE: "+variables["page_title"])
+    logger.print("  DEPTH: "+ str(variables["page_depth"]))
     
     template_base_path = pjoin(base_path, config["config"]["options"].get("template_location","templates"))
 
@@ -93,7 +97,7 @@ def generate_page(template_path):
     if "output_flatten_paths" in config["config"]["options"]:
         for to_flatten in config["config"]["options"]["output_flatten_paths"]:
            output_path = output_path.replace(to_flatten,"")                                           
-    print("output path:",output_path)
+    logger.print("output path:"+output_path)
 
     if os.path.exists( os.path.dirname(output_path)) == False:
         os.makedirs(os.path.dirname(output_path))
@@ -113,11 +117,16 @@ def generate_page(template_path):
 
 
         if output_text == False:
-            print("ERROR WHILE PARSING TEMPLATE FILE:", pjoin(template_base_path, template_path))
+            logger.print("ERROR WHILE PARSING TEMPLATE FILE: "+pjoin(template_base_path, template_path))
+
+
+            logger.print_stack()
             return False
 
         with open(output_path, "w") as out_file:
             out_file.write(output_text)
+
+log_stack = []
 
 def generate_post(post_path):
     global template_base_path
@@ -145,14 +154,15 @@ def generate_all_posts(post_paths):
 
 def generate_all_pages(page_paths,ignore_list):
     for entry in page_paths:
-        print(f"  Searching pages in folder: {entry}" )
+        logger.print(f"  Searching pages in folder: {entry}" )
         corrected_path = pjoin(base_path,entry)
-        print("fixed path",corrected_path)
+        logger.print("fixed path:  "+corrected_path)
 
         for dirpath ,folders,files in os.walk(corrected_path):
             for file_name in files:
                 exclude = False
-                print("   found:",dirpath,file_name)
+                logger.print("   found:"+dirpath+"  "+file_name)
+
                 for exclude_file in ignore_list:
                     if file_name.find(exclude_file) != -1:
                         exclude = True
@@ -165,8 +175,10 @@ def generate_all_pages(page_paths,ignore_list):
                 real_path =  pjoin(dirpath, file_name)
                 readjusted_path = real_path[real_path.find(entry):]
                 print("  ",readjusted_path)
+
+                logger.open_log( open( pjoin( config["config"]["logs"], f"{file_name}_.log"  ), "w" ))
                 generate_page(readjusted_path)
-                
+                logger.close_log()
 
 
 
@@ -184,6 +196,9 @@ def start_generation():
     config = load_yaml()
     options = config["config"]["options"]
 
+    config["config"]["logs"] = os.path.join(generatin_base_path,"cache","log")
+
+
     if not check_base_config(config):
         exit(-1)
 
@@ -194,30 +209,36 @@ def start_generation():
         #shutil.rmtree(generatin_base_path)
         pass
 
+
     if not os.path.exists(generatin_base_path):
         os.makedirs(generatin_base_path)
 
+    if not os.path.exists(config["config"]["logs"]):
+        os.makedirs(config["config"]["logs"])
+
+    logger.open_log(open( pjoin(config["config"]["logs"], "main_log.txt" ), "w"  ))
+
     if config["config"].get("direct_copy_folders"):
         for folder in config["config"].get("direct_copy_folders"):
-            print(f"Moving folder {folder} ...")
+            logger.print(f"Moving folder {folder} ...")
             if os.path.exists( pjoin(generatin_base_path,folder)   ):
-                print("folder exists in output, going to remove it ...")
+                logger.print("folder exists in output, going to remove it ...")
                 shutil.rmtree(pjoin(generatin_base_path,folder))
             shutil.copytree( pjoin(base_path, folder), pjoin(generatin_base_path, folder))
 
     if config["config"].get("direct_copy_files"):
         for file in config["config"].get("direct_copy_files"):
-            print(f"Moving files {file} ...")
+            logger.print(f"Moving files {file} ...")
             shutil.copy( pjoin(base_path, file) , pjoin(generatin_base_path, file))
 
     options_ = config["config"]["options"]
 
     if options_.get("generate_pages",False):
-        print("generating pages....")
+        logger.print("generating pages....")
         generate_all_pages(options_.get("page_directories"),options_.get("ignore_pages"))
 
 #    generate_page(options.get("start_template", "default"))
-
+    logger.close_log()
     exit()
 
     if config["config"]["options"].get("generate_all")or \

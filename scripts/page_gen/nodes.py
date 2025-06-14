@@ -21,6 +21,14 @@ class cConditionTemplate(cNode):
         self.false_parts = false_parts
         self.consumed = 0
 
+    def show(self):
+        print("---------")
+        print("node info")
+        print("type " + self.type)
+        print(f"cond parts: {self.condition_parts} ")
+        print(f"true:{self.true_parts}" )
+
+
 class cLoopTemplate(cNode):
     def __init__(self,loop_condition, loop_content):
         self.type = "LOOP"

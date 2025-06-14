@@ -8,9 +8,11 @@ import md_parser.parse_md.concerns
 import tokens
 import nodes
 
+import log_helper
+import re
 
 t = tokens.toks()
-
+p = log_helper.p
 
 def match_template_end(tok_list):
     tok_list = retype_tokens(tok_list)
@@ -28,31 +30,7 @@ def match_template_start(tok_list):
 print("imp parser")
 concerns = None
 
-class PrintHelper():
-    def __init__(self):
-        self.lvl = 0
 
-    def u(self):
-        self.lvl +=1
-        return self
-
-    def d(self):
-        self.lvl -=1
-        return self
-
-    def print_c(self,txt,col):
-        self.print(col + txt + colorama.Style.RESET_ALL )
-        return self
-
-    def print(self,txt):
-        lines = txt.split("\n")
-        for line in lines:
-            print(f"{self.lvl*'  '}{line}" )
-
-        return self
-
-
-p = PrintHelper()
 
 #fix token list problem ...
 def retype_tokens(tokens):
@@ -164,29 +142,126 @@ class ImportTemplate():
 
         p.d().d()
         return ret
-    
+
+
 class ConditionTemplate():
     def match(self,token_list):
-        p.u().print("Condition")
+        p.u().print_c("Check for condition",colorama.Fore.CYAN)
 
         token_list = retype_tokens(token_list)
         res = token_list.peek_or(
             [
-                [t.SPACE, t.STRING, t.COLON],
                 [t.STRING,t.COLON],
             ])
+        print(res)
+        
+        if res[0] == False:
+            p.print("no condition found")
+            return False
 
+        if token_list.getValueAt(1) == "IF" :
+            p.print("condition IF found")
+        else:
+            return False
+
+        token_list_offset = 2
+
+        print_first_few(token_list)
+
+        #parse condition
+
+        next_possible = {
+            t.STRING : [  t.SPACE , t.STRING, t.STRING_START_END , t.BRACE_OPEN , t.BIGER ,t.SMALLER, t.EQUAL_SIGN ],
+            t.STRING_START_END : [ t.SPACE , t.STRING, t.STRING_START_END],
+            t.BIGER : [ t.SPACE, t.STRING ],
+            t.SMALLER : [ t.SPACE, t.STRING],
+            t.EQUAL_SIGN : [t.SPACE, t.EQUAL_SIGN, t.STRING],
+            t.SPACE : [t.STRING, t.STRING_START_END, t.BIGER, t.SMALLER, t.EQUAL_SIGN, t.SPACE, t.BRACE_OPEN]
+        }
+
+        cur_type = t.STRING
+        end_type = t.BRACE_OPEN
+        txt = ""
+        count = token_list_offset
+
+        while cur_type in next_possible.keys():
+            next_valid = token_list.t_list[count].type in next_possible[cur_type]
+            if not next_valid:
+                p.print(f"Not valid next token {token_list.t_list[count].type} after {cur_type} ")
+                return False
+
+            if token_list.t_list[count].type == end_type:
+                p.print(f"End type found: {end_type}")
+                break
+
+            cur_type = token_list.t_list[count].type
+
+            p.print(f"cur type: {cur_type}")
+
+            if cur_type in next_possible.keys():
+                txt+=token_list.t_list[count].value
+                count += 1
+            else:
+                p.print("Valid path syntax!")
+                p.print(" "+txt)
+                path_parse_success = True
+
+        #ret = cNode("PATH", txt, count)
+        p.print(f"{txt}")
+        p.print("CONDITION SEARCH DONE")
+        p.print("CONDITION CHECK")
+
+        res = re.match("^(\w+) *([=><]{1,2}) *([^=<>]*) THEN$",txt.strip())
+        if res == None:
+            p.print("Not a valid condition !")
+            return False
+        
+        p.print(f"{res.groups()}")
+        p.print("Condition check end")
+
+        p.print("Finding content in condition...")
+
+        content_ = tok_till(token_list.t_list[count+1:],[t.BRACE_CLOSE])
+        p.print(f"{content_}")
+
+        p.print("content search done ,searching condition end...")
+
+        content_tokens = token_list.t_list[count+1: count+1+content_[0] ]
+        p.print(f"{content_tokens}")
+        base_offset_ = count+1+content_[0]
+        additional_offset_ = 0
+
+        
+
+        #while len(token_list.t_list[base_offset_+additional_offset_:])>2:
+            #print(len(token_list.t_list[base_offset_+additional_offset_:]))
+        #    result = match_template_end(token_list.t_list[base_offset_ + additional_offset_:])
+            #p.print( token_list.t_list[base_offset_+ additional_offset_].type)
+            #p.print(f"result: {result}")
+
+        #    additional_offset_+=1
+
+        #    if result :
+        #        break
+        #else:
+        #    p.print("end not found ~")
+        #    return False
+
+        #condition_end = match_template_end(token_list.t_list[count+1+content_[0]:])
+        #p.print(f"{condition_end}")
+        #p.print("Found the end of the condition ^-^")
 
         p.d()
-        return False
+        condition_node = nodes.cConditionTemplate(res.groups(),content_tokens,[] )
+        condition_node.consumed = base_offset_ + additional_offset_ +1
+        return condition_node
 
 class RepeatTemplate():
     def match(self, token_list):
-        p.u().print("Repeat")
+        p.u().print_c("Repeat",colorama.Fore.CYAN)
 
         p.d()
         return False
-
 
 
 def tok_till(tokens,exept_list):
@@ -194,7 +269,7 @@ def tok_till(tokens,exept_list):
     count=0
 
     while tokens.t_list[count].type not in exept_list:
-        p.print(tokens.t_list[count].type)
+        p.print(f"{tokens.t_list[count].type}  {tokens.t_list[count].value}")
         count+=1
     return [count,tokens.t_list[count].type]
 
